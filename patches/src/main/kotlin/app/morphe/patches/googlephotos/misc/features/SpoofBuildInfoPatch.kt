@@ -5,18 +5,16 @@
 
 package app.morphe.patches.googlephotos.misc.features
 
-import app.morphe.patches.all.misc.build.BuildInfo
-import app.morphe.patches.all.misc.build.baseSpoofBuildInfoPatch
+import app.morphe.patcher.patch.bytecodePatch
 
-// Spoof build info to Google Pixel XL.
-val spoofBuildInfoPatch = baseSpoofBuildInfoPatch {
-    BuildInfo(
-        brand = "google",
-        manufacturer = "Google",
-        device = "marlin",
-        product = "marlin",
-        model = "Pixel XL",
-        fingerprint = "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys",
-    )
+// Placeholder patch: build spoofing is currently handled elsewhere.
+// This keeps the dependency from SpoofFeaturesPatch satisfied without
+// requiring the shared all.misc.build helpers from the Morphe template.
+val spoofBuildInfoPatch = bytecodePatch(
+    description = "No-op build spoof placeholder for Google Photos.",
+) {
+    execute {
+        // Intentionally left blank.
+    }
 }
 
