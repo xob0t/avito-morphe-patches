@@ -4,6 +4,14 @@
 ### Bug Fixes
 
 * google photos patch logic ([58f8bc8](https://github.com/RookieEnough/De-ReVanced/commit/58f8bc80dfd601cfe5a5dfee81e64d78bab0f496))
+* release 1.0.1 ([26175cf](https://github.com/RookieEnough/De-ReVanced/commit/26175cf2910917be08734a741087018e127a1648))
+
+## [1.0.1](https://github.com/RookieEnough/De-ReVanced/compare/v1.0.0...v1.0.1) (2026-03-06)
+
+
+### Bug Fixes
+
+* google photos patch logic ([58f8bc8](https://github.com/RookieEnough/De-ReVanced/commit/58f8bc80dfd601cfe5a5dfee81e64d78bab0f496))
 
 # 1.0.0 (2026-03-05)
 
