@@ -11,9 +11,10 @@ import app.morphe.patcher.patch.bytecodePatch
 @Suppress("unused")
 val fixGoogleLoginPatch = bytecodePatch(
     name = "Fix Google login",
-    description = "Allows logging in with a Google account. (Version pin not specified in this build.)",
+    description = "Allows logging in with a Google account. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
-    compatibleWith(*AppCompatibilities.tiktokAny())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         listOf(

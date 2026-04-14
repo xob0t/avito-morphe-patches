@@ -52,7 +52,8 @@ private data class OpenDebugTargets(
 @Suppress("unused")
 val enableOpenDebugPatch = bytecodePatch(
     name = "Enable Open Debug",
-    description = "Re-enables the hidden \"Open debug\" entry. Supported on TikTok 43.6.2 only (use the APK set from ReVanced MR !6535). Not compatible with 43.8.3. This port finds OpenDebug classes by bytecode shape (LLILLL / compose LIZ) so minor obfuscation differences still patch.",
+    description = "Re-enables the hidden \"Open debug\" entry. Supported on TikTok 43.6.2 only. (Not compatible with 43.8.3.)",
+    default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 

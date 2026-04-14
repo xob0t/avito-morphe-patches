@@ -27,11 +27,12 @@ private const val EXTENSION_CLASS_DESCRIPTOR = "Lapp/morphe/extension/tiktok/dow
 @Suppress("unused")
 val downloadsPatch = bytecodePatch(
     name = "Downloads",
-    description = "Removes download restrictions and changes the default path to download to. (Supports TikTok 43.8.3 only.)",
+    description = "Removes download restrictions and changes the default download path. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 
-    compatibleWith(*AppCompatibilities.tiktok4383())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         SettingsStatusLoadFingerprint.method.addInstruction(

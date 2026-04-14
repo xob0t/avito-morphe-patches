@@ -20,6 +20,7 @@ private const val EXTENSION_CLASS_DESCRIPTOR = "Lapp/morphe/extension/tiktok/fee
 val feedFilterPatch = bytecodePatch(
     name = "Feed filter",
     description = "Removes ads, livestreams, stories, image videos and videos with a specific amount of views or likes from the feed. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
     dependsOn(
         sharedExtensionPatch,

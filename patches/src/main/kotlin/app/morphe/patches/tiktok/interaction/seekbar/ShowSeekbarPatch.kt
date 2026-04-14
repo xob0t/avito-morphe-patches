@@ -11,9 +11,10 @@ import app.morphe.patcher.patch.bytecodePatch
 @Suppress("unused")
 val showSeekbarPatch = bytecodePatch(
     name = "Show seekbar",
-    description = "Shows progress bar for all video. (Version pin not specified in this build.)",
+    description = "Shows a progress bar for all videos. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
-    compatibleWith(*AppCompatibilities.tiktokAny())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         ShouldShowSeekBarFingerprint.method.addInstructions(

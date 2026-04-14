@@ -20,12 +20,12 @@ import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 @Suppress("unused")
 val playbackSpeedPatch = bytecodePatch(
     name = "Playback speed",
-    description = "Enables the playback speed option for all videos and retains the speed configurations in between videos. (Disabled for TikTok 43.8.3.)",
-    default = false,
+    description = "Enables the playback speed option for all videos and retains the speed configurations in between videos. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 
-    compatibleWith(*AppCompatibilities.tiktok4383())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         GetSpeedFingerprint.method.apply {
@@ -61,7 +61,7 @@ val playbackSpeedPatch = bytecodePatch(
             """,
         )
 
-        // Deprecated upstream for 43.8.3 (patch is disabled via default=false).
+        // Kept in Morphe: supported on both 43.6.2 and 43.8.3.
     }
 }
 

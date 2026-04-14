@@ -17,9 +17,10 @@ import com.android.tools.smali.dexlib2.iface.instruction.TwoRegisterInstruction
 @Suppress("unused")
 val rememberClearDisplayPatch = bytecodePatch(
     name = "Remember clear display",
-    description = "Remembers the clear display configurations in between videos. (Supports TikTok 43.8.3 only.)",
+    description = "Remembers the clear display configurations in between videos. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
-    compatibleWith(*AppCompatibilities.tiktok4383())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         // Prevent excessive logging (can cause instability on 43.8.3).

@@ -14,11 +14,12 @@ private const val EXTENSION_CLASS_DESCRIPTOR = "Lapp/morphe/extension/tiktok/sha
 @Suppress("unused")
 val sanitizeShareUrlsPatch = bytecodePatch(
     name = "Sanitize sharing links",
-    description = "Remove tracking parameters from shared links. (Supports TikTok 43.8.3 only.)",
+    description = "Removes tracking parameters from shared links. (Supports TikTok 43.6.2 + 43.8.3.)",
+    default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 
-    compatibleWith(*AppCompatibilities.tiktok4383())
+    compatibleWith(*AppCompatibilities.tiktok4362And4383())
 
     execute {
         ShareUrlShorteningFingerprint.method.apply {

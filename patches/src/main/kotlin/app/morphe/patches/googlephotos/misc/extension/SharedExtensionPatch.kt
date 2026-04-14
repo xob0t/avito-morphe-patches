@@ -16,24 +16,8 @@ import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 
 private class HomeActivityInitHook : ExtensionHook(
     fingerprint = HomeActivityOnCreateFingerprint,
-    insertIndexResolver = { method: Method ->
-        val getApplicationContextIndex = method.indexOfFirstInstructionOrThrow {
-            getReference<MethodReference>()?.name == "getApplicationContext"
-        }
-
-        // Below the move-result-object instruction.
-        getApplicationContextIndex + 2
-    },
-    contextRegisterResolver = { method: Method ->
-        val getApplicationContextIndex = method.indexOfFirstInstructionOrThrow {
-            getReference<MethodReference>()?.name == "getApplicationContext"
-        }
-
-        val moveResultInstruction =
-            method.implementation!!.instructions.elementAt(getApplicationContextIndex + 1) as OneRegisterInstruction
-
-        "v${moveResultInstruction.registerA}"
-    },
+    insertIndexResolver = { 0 },
+    contextRegisterResolver = { "p0" },
 )
 
 internal val homeActivityInitHook: ExtensionHook = HomeActivityInitHook()

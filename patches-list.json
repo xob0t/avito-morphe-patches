@@ -1,5 +1,5 @@
 {
-  "version": "1.0.3",
+  "version": "v1.0.4",
   "appNames": {
     "com.amazon.mShop.android.shopping": "Amazon Shopping",
     "com.amazon.mp3": "Amazon Music",
@@ -559,12 +559,18 @@
     },
     {
       "name": "Disable login requirement",
-      "description": "Disables mandatory login for TikTok. (Version pin not specified in this build.)",
+      "description": "Disables mandatory login for TikTok. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {
-        "com.ss.android.ugc.trill": null,
-        "com.zhiliaoapp.musically": null
+        "com.ss.android.ugc.trill": [
+          "43.6.2",
+          "43.8.3"
+        ],
+        "com.zhiliaoapp.musically": [
+          "43.6.2",
+          "43.8.3"
+        ]
       },
       "compatibility": [
         {
@@ -574,7 +580,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]
@@ -586,7 +596,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]
@@ -646,16 +660,18 @@
     },
     {
       "name": "Downloads",
-      "description": "Removes download restrictions and changes the default path to download to. (Supports TikTok 43.8.3 only.)",
+      "description": "Removes download restrictions and changes the default download path. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [
         "BytecodePatch"
       ],
       "compatiblePackages": {
         "com.ss.android.ugc.trill": [
+          "43.6.2",
           "43.8.3"
         ],
         "com.zhiliaoapp.musically": [
+          "43.6.2",
           "43.8.3"
         ]
       },
@@ -666,6 +682,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -678,6 +698,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -739,7 +763,7 @@
     },
     {
       "name": "Enable Open Debug",
-      "description": "Re-enables the hidden \"Open debug\" entry. Supported on TikTok 43.6.2 only (use the APK set from ReVanced MR !6535). Not compatible with 43.8.3. This port finds OpenDebug classes by bytecode shape (LLILLL / compose LIZ) so minor obfuscation differences still patch.",
+      "description": "Re-enables the hidden \"Open debug\" entry. Supported on TikTok 43.6.2 only. (Not compatible with 43.8.3.)",
       "use": true,
       "dependencies": [
         "BytecodePatch"
@@ -885,12 +909,18 @@
     },
     {
       "name": "Fix Google login",
-      "description": "Allows logging in with a Google account. (Version pin not specified in this build.)",
+      "description": "Allows logging in with a Google account. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {
-        "com.ss.android.ugc.trill": null,
-        "com.zhiliaoapp.musically": null
+        "com.ss.android.ugc.trill": [
+          "43.6.2",
+          "43.8.3"
+        ],
+        "com.zhiliaoapp.musically": [
+          "43.6.2",
+          "43.8.3"
+        ]
       },
       "compatibility": [
         {
@@ -900,7 +930,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]
@@ -912,7 +946,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]
@@ -934,6 +972,30 @@
           "packageName": "com.tumblr",
           "description": null,
           "appIconColor": 6196,
+          "targets": [
+            {
+              "version": "",
+              "experimental": false
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Fix selected account persistence",
+      "description": "Prevents Google Photos from clearing the selected account after cold start when using MicroG.",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "com.google.android.apps.photos": null
+      },
+      "compatibility": [
+        {
+          "name": "Google Photos",
+          "packageName": "com.google.android.apps.photos",
+          "description": null,
+          "appIconColor": 16531260,
           "targets": [
             {
               "version": "",
@@ -1005,6 +1067,7 @@
       "dependencies": [
         "ResourcePatch",
         "ResourcePatch",
+        "BytecodePatch",
         "BytecodePatch"
       ],
       "compatiblePackages": {
@@ -1741,16 +1804,18 @@
     },
     {
       "name": "Playback speed",
-      "description": "Enables the playback speed option for all videos and retains the speed configurations in between videos. (Disabled for TikTok 43.8.3.)",
-      "use": false,
+      "description": "Enables the playback speed option for all videos and retains the speed configurations in between videos. (Supports TikTok 43.6.2 + 43.8.3.)",
+      "use": true,
       "dependencies": [
         "BytecodePatch"
       ],
       "compatiblePackages": {
         "com.ss.android.ugc.trill": [
+          "43.6.2",
           "43.8.3"
         ],
         "com.zhiliaoapp.musically": [
+          "43.6.2",
           "43.8.3"
         ]
       },
@@ -1761,6 +1826,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -1773,6 +1842,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -1808,14 +1881,16 @@
     },
     {
       "name": "Remember clear display",
-      "description": "Remembers the clear display configurations in between videos. (Supports TikTok 43.8.3 only.)",
+      "description": "Remembers the clear display configurations in between videos. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {
         "com.ss.android.ugc.trill": [
+          "43.6.2",
           "43.8.3"
         ],
         "com.zhiliaoapp.musically": [
+          "43.6.2",
           "43.8.3"
         ]
       },
@@ -1826,6 +1901,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -1838,6 +1917,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -1999,16 +2082,18 @@
     },
     {
       "name": "Sanitize sharing links",
-      "description": "Remove tracking parameters from shared links. (Supports TikTok 43.8.3 only.)",
+      "description": "Removes tracking parameters from shared links. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [
         "BytecodePatch"
       ],
       "compatiblePackages": {
         "com.ss.android.ugc.trill": [
+          "43.6.2",
           "43.8.3"
         ],
         "com.zhiliaoapp.musically": [
+          "43.6.2",
           "43.8.3"
         ]
       },
@@ -2019,6 +2104,10 @@
           "description": null,
           "appIconColor": 16657493,
           "targets": [
+            {
+              "version": "43.6.2",
+              "experimental": false
+            },
             {
               "version": "43.8.3",
               "experimental": false
@@ -2032,6 +2121,10 @@
           "appIconColor": 16657493,
           "targets": [
             {
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
               "version": "43.8.3",
               "experimental": false
             }
@@ -2042,8 +2135,8 @@
     },
     {
       "name": "Settings",
-      "description": "Adds ReVanced settings to TikTok. Supported on 43.6.2 only (APK from ReVanced MR !6535). Not compatible with 43.8.3. Disabled by default.",
-      "use": false,
+      "description": "Adds Morphe settings to TikTok. Supported on 43.6.2 only. (Not compatible with 43.8.3.)",
+      "use": true,
       "dependencies": [
         "BytecodePatch"
       ],
@@ -2142,12 +2235,18 @@
     },
     {
       "name": "Show seekbar",
-      "description": "Shows progress bar for all video. (Version pin not specified in this build.)",
+      "description": "Shows a progress bar for all videos. (Supports TikTok 43.6.2 + 43.8.3.)",
       "use": true,
       "dependencies": [],
       "compatiblePackages": {
-        "com.ss.android.ugc.trill": null,
-        "com.zhiliaoapp.musically": null
+        "com.ss.android.ugc.trill": [
+          "43.6.2",
+          "43.8.3"
+        ],
+        "com.zhiliaoapp.musically": [
+          "43.6.2",
+          "43.8.3"
+        ]
       },
       "compatibility": [
         {
@@ -2157,7 +2256,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]
@@ -2169,7 +2272,11 @@
           "appIconColor": 16657493,
           "targets": [
             {
-              "version": "",
+              "version": "43.6.2",
+              "experimental": false
+            },
+            {
+              "version": "43.8.3",
               "experimental": false
             }
           ]

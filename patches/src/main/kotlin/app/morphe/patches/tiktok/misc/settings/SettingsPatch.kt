@@ -21,8 +21,8 @@ private const val EXTENSION_CLASS_DESCRIPTOR = "Lapp/morphe/extension/tiktok/set
 @Suppress("unused")
 val settingsPatch = bytecodePatch(
     name = "Settings",
-    description = "Adds ReVanced settings to TikTok. Supported on 43.6.2 only (APK from ReVanced MR !6535). Not compatible with 43.8.3. Disabled by default.",
-    default = false,
+    description = "Adds Morphe settings to TikTok. Supported on 43.6.2 only. (Not compatible with 43.8.3.)",
+    default = true,
 ) {
     dependsOn(sharedExtensionPatch)
 
