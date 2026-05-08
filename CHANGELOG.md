@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/xob0t/xob0t-morphe-patches/compare/v1.0.0...v1.0.1) (2026-05-08)
+
+
+### Bug Fixes
+
+* generalize patch source name ([937be09](https://github.com/xob0t/xob0t-morphe-patches/commit/937be093f8e955c77ab4faee3789cef7db2095e8))
+
 # 1.0.0 (2026-05-08)
 
 
