@@ -1,13 +1,13 @@
-group = "app.template"
+group = "app.xob0t"
 
 patches {
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
-        contact = "na"
-        website = "na"
+        name = "Avito Morphe Patches"
+        description = "Avito patches for Morphe."
+        source = "https://github.com/xob0t/avito-morphe-patches"
+        author = "xob0t"
+        contact = "https://github.com/xob0t/avito-morphe-patches/issues"
+        website = "https://github.com/xob0t/avito-morphe-patches"
         license = "GPLv3"
     }
 }

@@ -1,7 +1,8 @@
-rootProject.name = "morphe-patches-template"
+rootProject.name = "avito-morphe-patches"
 
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         google()
         maven {
@@ -17,5 +18,5 @@ pluginManagement {
 }
 
 plugins {
-    id("app.morphe.patches") version "1.3.0"
+    id("app.morphe.patches") version "1.3.2"
 }

@@ -1,4 +1,57 @@
 {
-  "version": "",
-  "patches": []
+  "version": "v1.0.0",
+  "patches": [
+    {
+      "name": "Disable update prompts",
+      "description": "Prevents Avito's force-update screen opener from launching update screens.",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "com.avito.android",
+          "name": "Avito",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#00AAFF",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 28,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Remove ads",
+      "description": "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
+      "default": true,
+      "dependencies": [
+        "ResourcePatch"
+      ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.avito.android",
+          "name": "Avito",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#00AAFF",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 28,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    }
+  ]
 }
