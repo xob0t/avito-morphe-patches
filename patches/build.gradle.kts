@@ -2,12 +2,12 @@ group = "app.xob0t"
 
 patches {
     about {
-        name = "Avito Morphe Patches"
-        description = "Avito patches for Morphe."
-        source = "https://github.com/xob0t/avito-morphe-patches"
+        name = "xob0t Morphe Patches"
+        description = "Personal Morphe patches for Android apps."
+        source = "https://github.com/xob0t/xob0t-morphe-patches"
         author = "xob0t"
-        contact = "https://github.com/xob0t/avito-morphe-patches/issues"
-        website = "https://github.com/xob0t/avito-morphe-patches"
+        contact = "https://github.com/xob0t/xob0t-morphe-patches/issues"
+        website = "https://github.com/xob0t/xob0t-morphe-patches"
         license = "GPLv3"
     }
 }

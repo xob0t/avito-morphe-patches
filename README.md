@@ -1,6 +1,6 @@
-# Avito Morphe Patches
+# xob0t Morphe Patches
 
-Personal Morphe patches for Avito.
+Personal Morphe patches for Android apps.
 
 ## Patches
 
@@ -29,13 +29,13 @@ Personal Morphe patches for Avito.
 Add this repository as a remote patch source in Morphe:
 
 ```text
-https://github.com/xob0t/avito-morphe-patches
+https://github.com/xob0t/xob0t-morphe-patches
 ```
 
 Or use the raw bundle metadata URL:
 
 ```text
-https://raw.githubusercontent.com/xob0t/avito-morphe-patches/main/patches-bundle.json
+https://raw.githubusercontent.com/xob0t/xob0t-morphe-patches/main/patches-bundle.json
 ```
 
 ## License

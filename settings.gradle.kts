@@ -1,4 +1,4 @@
-rootProject.name = "avito-morphe-patches"
+rootProject.name = "xob0t-morphe-patches"
 
 pluginManagement {
     repositories {
