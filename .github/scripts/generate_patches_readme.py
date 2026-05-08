@@ -104,7 +104,7 @@ def versions_table(targets):
 
     cells = []
     for t in targets:
-        ver   = t["version"]
+        ver   = t["version"] or "all"
         label = f"🧪&nbsp;{ver}" if t.get("isExperimental") else ver
         cells.append(label)
 
