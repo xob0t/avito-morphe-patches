@@ -5,8 +5,22 @@ Personal Morphe patches for Avito.
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0](https://github.com/xob0t/avito-morphe-patches/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;2 patches total
+<details open>
+<summary>📦 Avito&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<br>
 
-The patch list is generated during release.
+**🎯 Supported versions:**
+
+| all |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Disable update prompts](#disable-update-prompts) | Prevents Avito's force-update screen opener from launching update screens. |  |
+| [Remove ads](#remove-ads) | Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading. |  |
+
+</details>
 
 <!-- PATCHES_END -->
 
