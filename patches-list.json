@@ -1,57 +1,241 @@
 {
-  "version": "1.0.1",
-  "patches": [
-    {
-      "name": "Disable update prompts",
-      "description": "Prevents Avito's force-update screen opener from launching update screens.",
-      "default": true,
-      "dependencies": [],
-      "compatiblePackages": [
-        {
-          "packageName": "com.avito.android",
-          "name": "Avito",
-          "description": null,
-          "apkFileType": "APK",
-          "appIconColor": "#00AAFF",
-          "signatures": null,
-          "targets": [
-            {
-              "version": null,
-              "isExperimental": false,
-              "minSdk": 28,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "Remove ads",
-      "description": "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
-      "default": true,
-      "dependencies": [
-        "ResourcePatch"
-      ],
-      "compatiblePackages": [
-        {
-          "packageName": "com.avito.android",
-          "name": "Avito",
-          "description": null,
-          "apkFileType": "APK",
-          "appIconColor": "#00AAFF",
-          "signatures": null,
-          "targets": [
-            {
-              "version": null,
-              "isExperimental": false,
-              "minSdk": 28,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    }
-  ]
+    "version":  "1.1.1",
+    "patches":  [
+                    {
+                        "name":  "Avito privacy",
+                        "description":  "Disables Avito first-party clickstream analytics and Avito\u0027s direct Adjust telemetry wrapper.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  [
+                                                   {
+                                                       "packageName":  "com.avito.android",
+                                                       "name":  "Avito",
+                                                       "description":  null,
+                                                       "apkFileType":  "APK",
+                                                       "appIconColor":  "#00AAFF",
+                                                       "signatures":  null,
+                                                       "targets":  [
+                                                                       {
+                                                                           "version":  null,
+                                                                           "isExperimental":  false,
+                                                                           "minSdk":  28,
+                                                                           "description":  null
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable Adjust",
+                        "description":  "Disables Adjust attribution manifest entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable AppMetrica",
+                        "description":  "Disables AppMetrica and legacy Yandex Metrica SDK entry points.",
+                        "default":  true,
+                        "dependencies":  [
+                                             "ResourcePatch"
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable AppsFlyer",
+                        "description":  "Disables AppsFlyer install referrer and attribution manifest entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable Firebase telemetry",
+                        "description":  "Disables Firebase telemetry collection flags and DataTransport sender entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable Google Analytics",
+                        "description":  "Disables legacy Google Analytics manifest entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable MyTracker",
+                        "description":  "Disables MyTracker manifest entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable RuStore metrics",
+                        "description":  "Disables RuStore metrics manifest entry points.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable Sentry telemetry",
+                        "description":  "Disables Sentry telemetry by turning off SDK auto-init and clearing the DSN.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Disable update prompts",
+                        "description":  "Prevents Avito\u0027s force-update screen opener from launching update screens.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  [
+                                                   {
+                                                       "packageName":  "com.avito.android",
+                                                       "name":  "Avito",
+                                                       "description":  null,
+                                                       "apkFileType":  "APK",
+                                                       "appIconColor":  "#00AAFF",
+                                                       "signatures":  null,
+                                                       "targets":  [
+                                                                       {
+                                                                           "version":  null,
+                                                                           "isExperimental":  false,
+                                                                           "minSdk":  28,
+                                                                           "description":  null
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Hide Avi bottom tab",
+                        "description":  "Removes the Avi assistant button from Avito\u0027s bottom navigation bar.",
+                        "default":  false,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  [
+                                                   {
+                                                       "packageName":  "com.avito.android",
+                                                       "name":  "Avito",
+                                                       "description":  null,
+                                                       "apkFileType":  "APK",
+                                                       "appIconColor":  "#00AAFF",
+                                                       "signatures":  null,
+                                                       "targets":  [
+                                                                       {
+                                                                           "version":  null,
+                                                                           "isExperimental":  false,
+                                                                           "minSdk":  28,
+                                                                           "description":  null
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Hide USB debugging",
+                        "description":  "Prevents apps from detecting USB debugging and related developer settings through common Android APIs.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Hide VPN detection",
+                        "description":  "Prevents apps from detecting VPN state through common Android network APIs.",
+                        "default":  true,
+                        "dependencies":  [
+
+                                         ],
+                        "compatiblePackages":  null,
+                        "options":  [
+
+                                    ]
+                    },
+                    {
+                        "name":  "Remove ads",
+                        "description":  "Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading.",
+                        "default":  true,
+                        "dependencies":  [
+                                             "ResourcePatch"
+                                         ],
+                        "compatiblePackages":  [
+                                                   {
+                                                       "packageName":  "com.avito.android",
+                                                       "name":  "Avito",
+                                                       "description":  null,
+                                                       "apkFileType":  "APK",
+                                                       "appIconColor":  "#00AAFF",
+                                                       "signatures":  null,
+                                                       "targets":  [
+                                                                       {
+                                                                           "version":  null,
+                                                                           "isExperimental":  false,
+                                                                           "minSdk":  28,
+                                                                           "description":  null
+                                                                       }
+                                                                   ]
+                                                   }
+                                               ],
+                        "options":  [
+
+                                    ]
+                    }
+                ]
 }

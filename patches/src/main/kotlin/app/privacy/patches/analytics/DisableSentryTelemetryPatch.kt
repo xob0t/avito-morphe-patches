@@ -11,7 +11,7 @@ import org.w3c.dom.Element
 val disableSentryTelemetryPatch = resourcePatch(
     name = "Disable Sentry telemetry",
     description = "Disables Sentry telemetry by turning off SDK auto-init and clearing the DSN.",
-    default = false,
+    default = true,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->
