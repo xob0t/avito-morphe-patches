@@ -1,9 +1,16 @@
 # [1.2.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0-dev.1) (2026-05-09)
 
 
-### Features
+### Included since v1.1.2
 
 * add freeRASP disable patch ([5379135](https://github.com/xob0t/morphe-patches/commit/5379135d4632519b0e6d8c6ffe78987de391f1eb))
+* add Ozon ad removal patch ([7f17af0](https://github.com/xob0t/morphe-patches/commit/7f17af00faa07d5669d8a8da61e2a660c267b0dc))
+* hide Ozon tile grid banner ads ([fb16043](https://github.com/xob0t/morphe-patches/commit/fb16043c4be1e5f28c997f3d84e8ecb2d818a3db))
+* hide Ozon infinite tile grids ([3597fca](https://github.com/xob0t/morphe-patches/commit/3597fcace93ba56867f21de682d37bd21a15e183))
+* clean up Ozon ad patch markers ([2984046](https://github.com/xob0t/morphe-patches/commit/29840469d150df5d4df9a82707e84637b5ff497b))
+* add Wildberries ads patch ([69697d8](https://github.com/xob0t/morphe-patches/commit/69697d88e59c992218c92e0be39a282ef4a1a384))
+* hide Wildberries PDP seller recommendations ([2df794f](https://github.com/xob0t/morphe-patches/commit/2df794f02af5be7c7f6f0dbf56790886c49a37d5))
+* fix Avito privacy patch stability ([411f2fd](https://github.com/xob0t/morphe-patches/commit/411f2fdbb33ef95271f0cf23a5f173ba63e29b77))
 
 ## [1.1.2](https://github.com/xob0t/morphe-patches/compare/v1.1.1...v1.1.2) (2026-05-09)
 
