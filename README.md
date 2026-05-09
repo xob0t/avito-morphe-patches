@@ -5,7 +5,7 @@ Personal Morphe patches for Android apps.
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0](https://github.com/xob0t/xob0t-morphe-patches/releases/tag/v1.1.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;14 patches total
+> **[v1.1.1](https://github.com/xob0t/xob0t-morphe-patches/releases/tag/v1.1.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;14 patches total
 <details open>
 <summary>📦 Avito&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
@@ -39,7 +39,7 @@ Personal Morphe patches for Android apps.
 | [Disable RuStore metrics](#disable-rustore-metrics) | Disables RuStore metrics manifest entry points. |  |
 | [Disable Sentry telemetry](#disable-sentry-telemetry) | Disables Sentry telemetry by turning off SDK auto-init and clearing the DSN. |  |
 | [Hide USB debugging](#hide-usb-debugging) | Prevents apps from detecting USB debugging and related developer settings through common Android APIs. |  |
-| [Hide VPN detection](#hide-vpn-detection) | Prevents apps from detecting VPN transport through common Android network APIs. |  |
+| [Hide VPN detection](#hide-vpn-detection) | Prevents apps from detecting VPN state through common Android network APIs. |  |
 
 </details>
 

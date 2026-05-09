@@ -1,3 +1,19 @@
+## [1.1.1](https://github.com/xob0t/xob0t-morphe-patches/compare/v1.1.0...v1.1.1) (2026-05-09)
+
+
+### Bug Fixes
+
+* publish patch metadata in the same format as official Morphe sources
+* correct release notes to include all changes since v1.0.1
+
+
+### Included since v1.0.1
+
+* add generic privacy patches ([b484837](https://github.com/xob0t/xob0t-morphe-patches/commit/b484837))
+* hide Avito ad network layouts ([ba09aea](https://github.com/xob0t/xob0t-morphe-patches/commit/ba09aea))
+* add Avito privacy patch ([0c21fbb](https://github.com/xob0t/xob0t-morphe-patches/commit/0c21fbb))
+* add Avito Avi bottom tab patch ([453aa11](https://github.com/xob0t/xob0t-morphe-patches/commit/453aa11))
+
 ## [1.1.0](https://github.com/xob0t/xob0t-morphe-patches/compare/v1.0.1...v1.1.0) (2026-05-09)
 
 
