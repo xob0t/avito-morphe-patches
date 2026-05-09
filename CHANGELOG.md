@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/xob0t/morphe-patches/compare/v1.1.1...v1.1.2) (2026-05-09)
+
+
+### Bug Fixes
+
+* rename spoof privacy patches ([8ddcd84](https://github.com/xob0t/morphe-patches/commit/8ddcd84ac5fe4e54f4c06461db29c6bc06deb1d6))
+
 ## [1.1.1](https://github.com/xob0t/morphe-patches/compare/v1.1.0...v1.1.1) (2026-05-09)
 
 
@@ -42,4 +49,3 @@
 ### Features
 
 * add Avito patches ([144aa62](https://github.com/xob0t/morphe-patches/commit/144aa62247d002385bc40029fb1ec8406b92028c))
-
