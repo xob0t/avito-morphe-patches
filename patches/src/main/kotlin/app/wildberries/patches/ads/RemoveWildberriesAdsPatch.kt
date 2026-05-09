@@ -28,6 +28,8 @@ private const val CART_RECOMMENDATIONS_VIEW_MODEL =
     "Lru/wildberries/cart/firststep/screen/uistate/RecommendationsViewModel;"
 private const val CART_SCREEN_UI_STATE =
     "Lru/wildberries/cart/firststep/screen/uistate/ProductCartUiState\$Screen;"
+private const val PRODUCT_CARD_SELLER_RECOMMENDATIONS_CONTROLLER =
+    "Lru/wildberries/productcard/ui/compose/recommendations/SellerRecommendationsBlockControllerKt;"
 private const val BIG_LOTTERY_MAPPER =
     "Lru/wildberries/mainpage/impl/presentation/component/mapper/BigLotteryMapper;"
 private const val BIG_LOTTERY_USE_CASE_FACADE =
@@ -89,7 +91,7 @@ private fun Method.isVoidMethod(name: String) =
 @Suppress("unused")
 val removeWildberriesAdsPatch = bytecodePatch(
     name = "Remove Wildberries ads",
-    description = "Removes Wildberries home banners, grid banners, promo headers, cart recommendations, and lottery popups.",
+    description = "Removes Wildberries home banners, grid banners, promo headers, product recommendations, and lottery popups.",
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_WILDBERRIES)
@@ -102,6 +104,7 @@ val removeWildberriesAdsPatch = bytecodePatch(
         var patchedBannerRenderMethods = 0
         var patchedBigSaleHeaderMethods = 0
         var patchedCartRecommendationMethods = 0
+        var patchedProductRecommendationMethods = 0
         var patchedBigLotteryMethods = 0
 
         classDefForEach { classDef ->
@@ -269,6 +272,20 @@ val removeWildberriesAdsPatch = bytecodePatch(
                     }
                 }
 
+                PRODUCT_CARD_SELLER_RECOMMENDATIONS_CONTROLLER -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isVoidMethod("RecommendationsBlockController")) {
+                            method.addInstructions(
+                                0,
+                                """
+                                    return-void
+                                """,
+                            )
+                            patchedProductRecommendationMethods++
+                        }
+                    }
+                }
+
                 BIG_LOTTERY_MAPPER -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isListReturnMethod("map")) {
@@ -347,9 +364,10 @@ val removeWildberriesAdsPatch = bytecodePatch(
             patchedBannerRenderMethods == 0 &&
             patchedBigSaleHeaderMethods == 0 &&
             patchedCartRecommendationMethods == 0 &&
+            patchedProductRecommendationMethods == 0 &&
             patchedBigLotteryMethods == 0
         ) {
-            throw PatchException("No Wildberries banner, promo header, cart recommendation, or lottery methods were found")
+            throw PatchException("No Wildberries banner, promo header, recommendation, or lottery methods were found")
         }
 
         println(
@@ -359,7 +377,8 @@ val removeWildberriesAdsPatch = bytecodePatch(
                 "$patchedMainBannerStateMethods main banner state methods, " +
                 "$patchedBannerRenderMethods banner render methods, " +
                 "$patchedBigSaleHeaderMethods promo header methods, and " +
-                "$patchedCartRecommendationMethods cart recommendation methods, and " +
+                "$patchedCartRecommendationMethods cart recommendation methods, " +
+                "$patchedProductRecommendationMethods product recommendation methods, and " +
                 "$patchedBigLotteryMethods lottery methods.",
         )
     }
