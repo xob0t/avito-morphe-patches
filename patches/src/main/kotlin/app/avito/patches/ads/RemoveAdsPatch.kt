@@ -33,6 +33,17 @@ private val hiddenRewardLayouts = listOf(
     "res/layout/reward_bug_entry_floating_view.xml",
 )
 
+private val hiddenAdLayouts = listOf(
+    "res/layout/ad_avito.xml",
+    "res/layout/ad_avito_network_bdui.xml",
+    "res/layout/ad_avito_network_avl_bdui.xml",
+    "res/layout/yandex_ad.xml",
+    "res/layout/yandex_list_ad.xml",
+    "res/layout/yandex_avl_ad.xml",
+    "res/layout/my_target_ad.xml",
+    "res/layout/my_target_list_ad.xml",
+)
+
 private fun Element.childrenNamed(name: String): List<Element> {
     val nodes = childNodes
     return buildList {
@@ -91,7 +102,7 @@ private val removeAdResourcesPatch = resourcePatch {
             }
         }
 
-        hiddenRewardLayouts.forEach { path ->
+        (hiddenRewardLayouts + hiddenAdLayouts).forEach { path ->
             document(path).use { document ->
                 document.documentElement.apply {
                     setAttribute("android:visibility", "gone")
