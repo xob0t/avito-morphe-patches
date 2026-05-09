@@ -64,7 +64,7 @@
     },
     {
       "name": "Disable AppMetrica",
-      "description": "Removes AppMetrica and legacy Yandex Metrica manifest entry points.",
+      "description": "Disables AppMetrica and legacy Yandex Metrica SDK entry points.",
       "default": false,
       "dependencies": [
         "ResourcePatch"
@@ -129,6 +129,31 @@
       "dependencies": [
         "ResourcePatch"
       ],
+      "compatiblePackages": [
+        {
+          "packageName": "com.avito.android",
+          "name": "Avito",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#00AAFF",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 28,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Avito privacy",
+      "description": "Disables Avito first-party clickstream analytics and Avito's direct Adjust telemetry wrapper.",
+      "default": false,
+      "dependencies": [],
       "compatiblePackages": [
         {
           "packageName": "com.avito.android",

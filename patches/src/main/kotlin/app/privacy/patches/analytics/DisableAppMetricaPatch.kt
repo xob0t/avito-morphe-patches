@@ -1,14 +1,11 @@
 package app.privacy.patches.analytics
 
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.patch.resourcePatch
 import org.w3c.dom.Element
 
-@Suppress("unused")
-val disableAppMetricaPatch = resourcePatch(
-    name = "Disable AppMetrica",
-    description = "Removes AppMetrica and legacy Yandex Metrica manifest entry points.",
-    default = false,
-) {
+private val disableAppMetricaManifestPatch = resourcePatch {
     execute {
         document("AndroidManifest.xml").use { document ->
             val application = document.documentElement.childrenNamed("application").single() as Element
@@ -37,5 +34,80 @@ val disableAppMetricaPatch = resourcePatch(
                     "$disabledComponents manifest components.",
             )
         }
+    }
+}
+
+@Suppress("unused")
+val disableAppMetricaPatch = bytecodePatch(
+    name = "Disable AppMetrica",
+    description = "Disables AppMetrica and legacy Yandex Metrica SDK entry points.",
+    default = false,
+) {
+    dependsOn(disableAppMetricaManifestPatch)
+
+    execute {
+        var patchedMethods = 0
+
+        listOf(
+            "Lcom/yandex/metrica/YandexMetrica;",
+            "Lcom/yandex/metrica/AppMetricaJsInterface;",
+            "Lcom/yandex/metrica/AppMetricaInitializerJsInterface;",
+        ).forEach { classType ->
+            val classDef = mutableClassDefByOrNull(classType) ?: return@forEach
+
+            classDef.methods
+                .filter { method ->
+                    method.name != "<init>" &&
+                        method.returnType == "V" &&
+                        method.implementation != null
+                }
+                .forEach { method ->
+                    method.addInstructions(0, "return-void")
+                    patchedMethods++
+                }
+        }
+
+        mutableClassDefByOrNull("Lcom/yandex/metrica/impl/ob/U1;")?.methods?.forEach { method ->
+            when {
+                method.name in setOf("reportData", "sendCrash") &&
+                    method.returnType == "V" &&
+                    method.implementation != null -> {
+                    method.addInstructions(0, "return-void")
+                    patchedMethods++
+                }
+
+                method.name in setOf("queuePauseUserSession", "queueReport", "queueResumeUserSession") &&
+                    method.returnType == "Ljava/util/concurrent/Future;" &&
+                    method.implementation != null -> {
+                    method.addInstructions(
+                        0,
+                        """
+                            const/4 p0, 0x0
+                            return-object p0
+                        """,
+                    )
+                    patchedMethods++
+                }
+            }
+        }
+
+        mutableClassDefByOrNull("Lcom/yandex/metrica/impl/ob/U1\$g;")?.methods
+            ?.filter { method ->
+                method.name == "call" &&
+                    method.returnType == "Ljava/lang/Void;" &&
+                    method.implementation != null
+            }
+            ?.forEach { method ->
+                method.addInstructions(
+                    0,
+                    """
+                        const/4 p0, 0x0
+                        return-object p0
+                    """,
+                )
+                patchedMethods++
+            }
+
+        println("Disable AppMetrica: patched $patchedMethods SDK entry point methods.")
     }
 }
