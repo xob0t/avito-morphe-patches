@@ -173,6 +173,31 @@
         }
       ],
       "options": []
+    },
+    {
+      "name": "Hide Avi bottom tab",
+      "description": "Removes the Avi assistant button from Avito's bottom navigation bar.",
+      "default": false,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "com.avito.android",
+          "name": "Avito",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#00AAFF",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 28,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
     }
   ]
 }
