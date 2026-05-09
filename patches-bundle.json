@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-05-09T04:22:31",
-  "description": "## [1.1.2](https://github.com/xob0t/morphe-patches/compare/v1.1.1...v1.1.2) (2026-05-09)\n\n\n### Bug Fixes\n\n* rename spoof privacy patches ([8ddcd84](https://github.com/xob0t/morphe-patches/commit/8ddcd84ac5fe4e54f4c06461db29c6bc06deb1d6))",
-  "download_url": "https://github.com/xob0t/morphe-patches/releases/download/v1.1.2/patches-1.1.2.mpp",
+  "created_at": "2026-05-09T11:01:43",
+  "description": "# [1.2.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0-dev.1) (2026-05-09)\n\n\n### Features\n\n* add freeRASP disable patch ([5379135](https://github.com/xob0t/morphe-patches/commit/5379135d4632519b0e6d8c6ffe78987de391f1eb))",
+  "download_url": "https://github.com/xob0t/morphe-patches/releases/download/v1.2.0-dev.1/patches-1.2.0-dev.1.mpp",
   "signature_download_url": "",
-  "version": "1.1.2"
+  "version": "1.2.0-dev.1"
 }

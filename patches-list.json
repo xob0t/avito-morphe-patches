@@ -1,5 +1,5 @@
 {
-  "version": "1.1.2",
+  "version": "1.2.0-dev.1",
   "patches": [
     {
       "name": "Avito privacy",
@@ -93,6 +93,14 @@
       "options": []
     },
     {
+      "name": "Disable freeRASP",
+      "description": "Disables the freeRASP mobile security SDK startup.",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": null,
+      "options": []
+    },
+    {
       "name": "Disable update prompts",
       "description": "Prevents Avito's force-update screen opener from launching update screens.",
       "default": true,
@@ -135,6 +143,56 @@
               "version": null,
               "isExperimental": false,
               "minSdk": 28,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Remove Ozon ads",
+      "description": "Removes Ozon ad widgets, banner carousels, video ads, and PDP promo blocks.",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "ru.ozon.app.android",
+          "name": "Ozon",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#005BFF",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 26,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Remove Wildberries ads",
+      "description": "Removes Wildberries home banners, grid banners, promo headers, product recommendations, and lottery popups.",
+      "default": true,
+      "dependencies": [],
+      "compatiblePackages": [
+        {
+          "packageName": "com.wildberries.ru",
+          "name": "Wildberries",
+          "description": null,
+          "apkFileType": "APK",
+          "appIconColor": "#A73AFD",
+          "signatures": null,
+          "targets": [
+            {
+              "version": null,
+              "isExperimental": false,
+              "minSdk": 26,
               "description": null
             }
           ]

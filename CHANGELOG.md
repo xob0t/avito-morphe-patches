@@ -1,3 +1,10 @@
+# [1.2.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0-dev.1) (2026-05-09)
+
+
+### Features
+
+* add freeRASP disable patch ([5379135](https://github.com/xob0t/morphe-patches/commit/5379135d4632519b0e6d8c6ffe78987de391f1eb))
+
 ## [1.1.2](https://github.com/xob0t/morphe-patches/compare/v1.1.1...v1.1.2) (2026-05-09)
 
 
