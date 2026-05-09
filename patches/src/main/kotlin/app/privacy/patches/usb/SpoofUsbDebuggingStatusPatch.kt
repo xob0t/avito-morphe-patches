@@ -137,9 +137,9 @@ private fun Method.hasUsbDebugPatchTarget(): Boolean {
 }
 
 @Suppress("unused")
-val hideUsbDebuggingPatch = bytecodePatch(
-    name = "Hide USB debugging",
-    description = "Prevents apps from detecting USB debugging and related developer settings through common Android APIs.",
+val spoofUsbDebuggingStatusPatch = bytecodePatch(
+    name = "Spoof USB debugging status",
+    description = "Spoofs USB debugging and related developer settings through common Android APIs.",
     default = true,
 ) {
     execute {
@@ -205,11 +205,11 @@ val hideUsbDebuggingPatch = bytecodePatch(
             patchedSettingsStringReads == 0 &&
             patchedDebuggerStateReads == 0
         ) {
-            throw PatchException("No USB debugging detection call sites were found")
+            throw PatchException("No USB debugging status call sites were found")
         }
 
         println(
-            "Hide USB debugging: patched $patchedSettingsIntReads settings int reads, " +
+            "Spoof USB debugging status: patched $patchedSettingsIntReads settings int reads, " +
                 "$patchedSettingsStringReads settings string reads, and " +
                 "$patchedDebuggerStateReads debugger state reads.",
         )

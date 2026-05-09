@@ -225,9 +225,9 @@ private fun Method.hasVpnNetworkRequestBuilder(): Boolean {
 }
 
 @Suppress("unused")
-val hideVpnDetectionPatch = bytecodePatch(
-    name = "Hide VPN detection",
-    description = "Prevents apps from detecting VPN state through common Android network APIs.",
+val spoofVpnStatusPatch = bytecodePatch(
+    name = "Spoof VPN status",
+    description = "Spoofs VPN state through common Android network APIs.",
     default = true,
 ) {
     execute {
@@ -349,11 +349,11 @@ val hideVpnDetectionPatch = bytecodePatch(
             patchedRoutes == 0 &&
             patchedNetworkInterfaceEnumerations == 0
         ) {
-            throw PatchException("No local VPN detection call sites were found")
+            throw PatchException("No local VPN status call sites were found")
         }
 
         println(
-            "Hide VPN detection: patched $patchedHasTransportCalls hasTransport(TRANSPORT_VPN) calls, " +
+            "Spoof VPN status: patched $patchedHasTransportCalls hasTransport(TRANSPORT_VPN) calls, " +
                 "$patchedHasNotVpnCapabilityCalls hasCapability(NOT_VPN) calls, " +
                 "$patchedVpnNetworkCallbacks VPN network callback registrations, " +
                 "$patchedCapabilityStrings capability strings, " +

@@ -50,8 +50,8 @@ https://github.com/xob0t/morphe-patches
 | [Disable MyTracker](#disable-mytracker) | Disables MyTracker manifest entry points. |  |
 | [Disable RuStore metrics](#disable-rustore-metrics) | Disables RuStore metrics manifest entry points. |  |
 | [Disable Sentry telemetry](#disable-sentry-telemetry) | Disables Sentry telemetry by turning off SDK auto-init and clearing the DSN. |  |
-| [Hide USB debugging](#hide-usb-debugging) | Prevents apps from detecting USB debugging and related developer settings through common Android APIs. |  |
-| [Hide VPN detection](#hide-vpn-detection) | Prevents apps from detecting VPN state through common Android network APIs. |  |
+| [Spoof USB debugging status](#spoof-usb-debugging-status) | Spoofs USB debugging and related developer settings through common Android APIs. |  |
+| [Spoof VPN status](#spoof-vpn-status) | Spoofs VPN state through common Android network APIs. |  |
 
 </details>
 
