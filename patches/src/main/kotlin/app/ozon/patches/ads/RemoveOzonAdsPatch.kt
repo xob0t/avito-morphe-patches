@@ -19,6 +19,8 @@ private const val OZON_CMS_BANNER_CAROUSEL_PREFIX =
     "Lru/ozon/app/android/storefront/widgets/cms/bannercarousel/"
 private const val OZON_TILE_SCROLL_PREFIX =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilescroll/"
+private const val OZON_TILE_GRID2_BANNER_VIEW_MAPPER =
+    "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tileGrid2/presentation/viewmapper/TileGrid2BannerViewMapper;"
 private const val OZON_TILE_GRID3_PREFIX =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilegrid3/"
 private const val OZON_TILE_GRID3_CONFIG =
@@ -127,6 +129,7 @@ val removeOzonAdsPatch = bytecodePatch(
         var patchedCmsBannerBindMethods = 0
         var patchedTileScrollListMapMethods = 0
         var patchedTileScrollBindMethods = 0
+        var patchedTileGrid2BannerCanMapMethods = 0
         var patchedTileGrid3CanMapMethods = 0
         var patchedTileGrid3ListMapMethods = 0
         var patchedTileGrid3BindMethods = 0
@@ -480,6 +483,21 @@ val removeOzonAdsPatch = bytecodePatch(
                     }
                 }
 
+                classType == OZON_TILE_GRID2_BANNER_VIEW_MAPPER -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isWidgetCanMapMethod()) {
+                            method.addInstructions(
+                                0,
+                                """
+                                    const/4 p0, 0x0
+                                    return p0
+                                """,
+                            )
+                            patchedTileGrid2BannerCanMapMethods++
+                        }
+                    }
+                }
+
                 classType.startsWith(OZON_TILE_GRID3_PREFIX) -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         when {
@@ -609,6 +627,7 @@ val removeOzonAdsPatch = bytecodePatch(
             patchedCmsBannerBindMethods == 0 &&
             patchedTileScrollListMapMethods == 0 &&
             patchedTileScrollBindMethods == 0 &&
+            patchedTileGrid2BannerCanMapMethods == 0 &&
             patchedTileGrid3CanMapMethods == 0 &&
             patchedTileGrid3ListMapMethods == 0 &&
             patchedTileGrid3BindMethods == 0 &&
@@ -642,6 +661,7 @@ val removeOzonAdsPatch = bytecodePatch(
                 "$patchedCmsBannerBindMethods CMS banner bind methods, " +
                 "$patchedTileScrollListMapMethods tile scroll list map methods, and " +
                 "$patchedTileScrollBindMethods tile scroll bind methods, " +
+                "$patchedTileGrid2BannerCanMapMethods tile grid2 banner canMap methods, " +
                 "$patchedTileGrid3CanMapMethods tile grid3 canMap methods, " +
                 "$patchedTileGrid3ListMapMethods tile grid3 list map methods, " +
                 "$patchedTileGrid3BindMethods tile grid3 bind methods, " +
