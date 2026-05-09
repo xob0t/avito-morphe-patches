@@ -4,10 +4,10 @@ patches {
     about {
         name = "xob0t Morphe Patches"
         description = "Personal Morphe patches for Android apps."
-        source = "https://github.com/xob0t/xob0t-morphe-patches"
+        source = "https://github.com/xob0t/morphe-patches"
         author = "xob0t"
-        contact = "https://github.com/xob0t/xob0t-morphe-patches/issues"
-        website = "https://github.com/xob0t/xob0t-morphe-patches"
+        contact = "https://github.com/xob0t/morphe-patches/issues"
+        website = "https://github.com/xob0t/morphe-patches"
         license = "GPLv3"
     }
 }

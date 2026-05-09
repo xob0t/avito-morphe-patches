@@ -1,7 +1,7 @@
 {
   "created_at": "2026-05-09T05:58:00",
-  "description": "## [1.1.1](https://github.com/xob0t/xob0t-morphe-patches/compare/v1.0.1...v1.1.1) (2026-05-09)\n\n\n### Features\n\n* fix and expand Avito ad removal\n* add generic privacy patches\n* add Avito privacy analytics patch\n* add optional Avito Avi bottom tab patch\n\n\n### Bug Fixes\n\n* build Android-ready patch bundle with dex entries",
-  "download_url": "https://github.com/xob0t/xob0t-morphe-patches/releases/download/v1.1.1/patches-1.1.1.mpp",
+  "description": "## [1.1.1](https://github.com/xob0t/morphe-patches/compare/v1.0.1...v1.1.1) (2026-05-09)\n\n\n### Features\n\n* fix and expand Avito ad removal\n* add generic privacy patches\n* add Avito privacy analytics patch\n* add optional Avito Avi bottom tab patch\n\n\n### Bug Fixes\n\n* build Android-ready patch bundle with dex entries",
+  "download_url": "https://github.com/xob0t/morphe-patches/releases/download/v1.1.1/patches-1.1.1.mpp",
   "signature_download_url": "",
   "version": "1.1.1"
 }
