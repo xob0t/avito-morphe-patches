@@ -4,7 +4,7 @@
 
 <div align="center">
 
-# De-ReVanced
+# De-Vanced
 
 ### *"ReVanced calls forks unofficial while calling itself official—that's not open source, that's hypocrisy. Time to De-ReVanced your phone."*
 
@@ -31,9 +31,9 @@
 
 ## About
 
-**De-ReVanced** is a curated collection of patches that have been migrated from [ReVanced](https://github.com/ReVanced/revanced-patches) to [Morphe](https://morphe.software)—a community-driven, open-source alternative for patching Android apps.
+**De-Vanced** is a curated collection of patches that have been migrated from [ReVanced](https://github.com/ReVanced/revanced-patches) to [Morphe](https://morphe.software)—a community-driven, open-source alternative for patching Android apps.
 
-### Why De-ReVanced?
+### Why De-Vanced?
 
 - **ReVanced labels community forks as "unofficial"** while positioning itself as the official project—despite being a fork of Vanced. The hypocrisy is real: if forks are unofficial, so is ReVanced.
 - **Morphe** is built on transparency, proper GPL compliance, and community collaboration—without the gatekeeping.
