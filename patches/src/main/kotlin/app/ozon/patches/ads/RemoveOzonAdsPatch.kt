@@ -38,6 +38,12 @@ private const val OZON_CELL_LIST_V2_MAPPER =
 private const val OZON_CELL_V2_VIEW_HOLDER =
     "Lru/ozon/app/android/widgets/commonTextWidget/cellList/presentation/CellV2ViewHolder;"
 
+private const val OZON_PDP_PAGE_TYPE_MARKER = "pageType=pdp"
+private const val OZON_PROFILE_GRID_CONTAINER_MARKER = "pagination_app_my_account"
+private const val OZON_FAVORITES_GRID_CONTAINER_MARKER = "recoms_pagination_favorites_app"
+private const val OZON_SEARCH_WARLOCK_MARKER = "generic-warlock"
+private const val OZON_SELECT_CELL_MARKER = "FIRST15"
+
 private fun Method.hasImplementation() = implementation != null
 
 private fun Method.isWidgetCanMapMethod() =
@@ -148,9 +154,9 @@ val removeOzonAdsPatch = bytecodePatch(
         var patchedSearchExpandableListMapMethods = 0
         var patchedSearchExpandableBindMethods = 0
         var patchedSearchWarlockRequestMethods = 0
-        var patchedDesignSystemAtomMapperMethods = 0
-        var patchedCellListV2MapperMethods = 0
-        var patchedCellV2BindMethods = 0
+        var patchedSearchWarlockDesignSystemAtomMapperMethods = 0
+        var patchedSearchWarlockCellListV2MapperMethods = 0
+        var patchedOzonSelectCellV2BindMethods = 0
 
         classDefForEach { classDef ->
             val classType = classDef.type
@@ -164,7 +170,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                 """
                                     invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
                                     move-result-object v0
-                                    const-string v1, "FIRST15"
+                                    const-string v1, "$OZON_SELECT_CELL_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v0
                                     if-eqz v0, :ozon_cell_v2_continue
@@ -179,7 +185,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                     :ozon_cell_v2_continue
                                 """,
                             )
-                            patchedCellV2BindMethods++
+                            patchedOzonSelectCellV2BindMethods++
                         }
                     }
                 }
@@ -192,7 +198,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                 """
                                     invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
                                     move-result-object v0
-                                    const-string v1, "generic-warlock"
+                                    const-string v1, "$OZON_SEARCH_WARLOCK_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v0
                                     if-eqz v0, :ozon_cell_list_continue
@@ -202,7 +208,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                     :ozon_cell_list_continue
                                 """,
                             )
-                            patchedCellListV2MapperMethods++
+                            patchedSearchWarlockCellListV2MapperMethods++
                         }
                     }
                 }
@@ -215,7 +221,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                 """
                                     invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
                                     move-result-object v0
-                                    const-string v1, "generic-warlock"
+                                    const-string v1, "$OZON_SEARCH_WARLOCK_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v0
                                     if-eqz v0, :ozon_ds_atom_continue
@@ -225,7 +231,7 @@ val removeOzonAdsPatch = bytecodePatch(
                                     :ozon_ds_atom_continue
                                 """,
                             )
-                            patchedDesignSystemAtomMapperMethods++
+                            patchedSearchWarlockDesignSystemAtomMapperMethods++
                         }
                     }
                 }
@@ -511,6 +517,7 @@ val removeOzonAdsPatch = bytecodePatch(
                 classType == OZON_TILE_GRID2_CONFIG -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isTileGrid2ParseMethod(classType)) {
+                            // These server-driven TileGrid2 containers are infinite recommendation grids with headers.
                             method.addInstructions(
                                 0,
                                 """
@@ -518,15 +525,15 @@ val removeOzonAdsPatch = bytecodePatch(
                                     move-result-object v0
                                     invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
                                     move-result-object v0
-                                    const-string v1, "pageType=pdp"
+                                    const-string v1, "$OZON_PDP_PAGE_TYPE_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
                                     if-nez v1, :ozon_tile_grid2_hide
-                                    const-string v1, "pagination_app_my_account"
+                                    const-string v1, "$OZON_PROFILE_GRID_CONTAINER_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
                                     if-nez v1, :ozon_tile_grid2_hide
-                                    const-string v1, "recoms_pagination_favorites_app"
+                                    const-string v1, "$OZON_FAVORITES_GRID_CONTAINER_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
                                     if-eqz v1, :ozon_tile_grid2_continue
@@ -681,9 +688,9 @@ val removeOzonAdsPatch = bytecodePatch(
             patchedSearchExpandableListMapMethods == 0 &&
             patchedSearchExpandableBindMethods == 0 &&
             patchedSearchWarlockRequestMethods == 0 &&
-            patchedDesignSystemAtomMapperMethods == 0 &&
-            patchedCellListV2MapperMethods == 0 &&
-            patchedCellV2BindMethods == 0
+            patchedSearchWarlockDesignSystemAtomMapperMethods == 0 &&
+            patchedSearchWarlockCellListV2MapperMethods == 0 &&
+            patchedOzonSelectCellV2BindMethods == 0
         ) {
             throw PatchException("No Ozon ad, installment, or recommendation widget methods were found")
         }
@@ -716,9 +723,9 @@ val removeOzonAdsPatch = bytecodePatch(
                 "$patchedSearchExpandableListMapMethods search expandable list map methods, and " +
                 "$patchedSearchExpandableBindMethods search expandable bind methods, " +
                 "$patchedSearchWarlockRequestMethods search Warlock request methods, " +
-                "$patchedDesignSystemAtomMapperMethods design-system atom mapper methods, and " +
-                "$patchedCellListV2MapperMethods cell-list V2 mapper methods, and " +
-                "$patchedCellV2BindMethods cell V2 bind methods.",
+                "$patchedSearchWarlockDesignSystemAtomMapperMethods search Warlock design-system atom mapper methods, and " +
+                "$patchedSearchWarlockCellListV2MapperMethods search Warlock cell-list V2 mapper methods, and " +
+                "$patchedOzonSelectCellV2BindMethods Ozon Select cell V2 bind methods.",
         )
     }
 }
