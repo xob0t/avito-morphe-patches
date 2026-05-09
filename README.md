@@ -2,6 +2,18 @@
 
 Personal Morphe patches for Android apps.
 
+## Import
+
+Primary option: open this link on Android to import the source in Morphe:
+
+[Add xob0t Morphe Patches](https://morphe.software/add-source?github=xob0t/morphe-patches)
+
+Manual source URL:
+
+```text
+https://github.com/xob0t/morphe-patches
+```
+
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
