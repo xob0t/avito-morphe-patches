@@ -1,10 +1,10 @@
 {
-    "version":  "1.1.1-dev.1",
+    "version":  "1.1.1-dev.2",
     "patches":  [
                     {
                         "name":  "Avito privacy",
                         "description":  "Disables Avito first-party clickstream analytics and Avito\u0027s direct Adjust telemetry wrapper.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -33,7 +33,7 @@
                     {
                         "name":  "Disable Adjust",
                         "description":  "Disables Adjust attribution manifest entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -45,7 +45,7 @@
                     {
                         "name":  "Disable AppMetrica",
                         "description":  "Disables AppMetrica and legacy Yandex Metrica SDK entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
                                              "ResourcePatch"
                                          ],
@@ -57,7 +57,7 @@
                     {
                         "name":  "Disable AppsFlyer",
                         "description":  "Disables AppsFlyer install referrer and attribution manifest entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -69,7 +69,7 @@
                     {
                         "name":  "Disable Firebase telemetry",
                         "description":  "Disables Firebase telemetry collection flags and DataTransport sender entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -81,7 +81,7 @@
                     {
                         "name":  "Disable Google Analytics",
                         "description":  "Disables legacy Google Analytics manifest entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -93,7 +93,7 @@
                     {
                         "name":  "Disable MyTracker",
                         "description":  "Disables MyTracker manifest entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -105,7 +105,7 @@
                     {
                         "name":  "Disable RuStore metrics",
                         "description":  "Disables RuStore metrics manifest entry points.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],
@@ -117,7 +117,7 @@
                     {
                         "name":  "Disable Sentry telemetry",
                         "description":  "Disables Sentry telemetry by turning off SDK auto-init and clearing the DSN.",
-                        "default":  false,
+                        "default":  true,
                         "dependencies":  [
 
                                          ],

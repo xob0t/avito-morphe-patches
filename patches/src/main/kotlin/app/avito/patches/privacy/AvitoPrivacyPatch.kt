@@ -8,7 +8,7 @@ import app.morphe.patcher.patch.bytecodePatch
 val avitoPrivacyPatch = bytecodePatch(
     name = "Avito privacy",
     description = "Disables Avito first-party clickstream analytics and Avito's direct Adjust telemetry wrapper.",
-    default = false,
+    default = true,
 ) {
     compatibleWith(COMPATIBILITY_AVITO)
 

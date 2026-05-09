@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableFirebaseTelemetryPatch = resourcePatch(
     name = "Disable Firebase telemetry",
     description = "Disables Firebase telemetry collection flags and DataTransport sender entry points.",
-    default = false,
+    default = true,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->

@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableMyTrackerPatch = resourcePatch(
     name = "Disable MyTracker",
     description = "Disables MyTracker manifest entry points.",
-    default = false,
+    default = true,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->

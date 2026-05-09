@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableRuStoreMetricsPatch = resourcePatch(
     name = "Disable RuStore metrics",
     description = "Disables RuStore metrics manifest entry points.",
-    default = false,
+    default = true,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->
