@@ -2,7 +2,6 @@ package app.privacy.patches.security
 
 import app.morphe.patcher.extensions.InstructionExtensions.instructionsOrNull
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
-import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.iface.Method
@@ -66,10 +65,6 @@ val disableFreeRaspPatch = bytecodePatch(
                     patchedStartCalls++
                 }
             }
-        }
-
-        if (patchedStartCalls == 0) {
-            throw PatchException("No freeRASP startup call sites were found")
         }
 
         println("Disable freeRASP: disabled $patchedStartCalls SDK startup calls.")

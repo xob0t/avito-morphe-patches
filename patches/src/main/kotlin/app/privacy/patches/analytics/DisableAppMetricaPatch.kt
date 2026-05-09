@@ -83,6 +83,8 @@ val disableAppMetricaPatch = bytecodePatch(
                         0,
                         """
                             const/4 p0, 0x0
+                            invoke-static {p0}, Ljava/util/concurrent/CompletableFuture;->completedFuture(Ljava/lang/Object;)Ljava/util/concurrent/CompletableFuture;
+                            move-result-object p0
                             return-object p0
                         """,
                     )
