@@ -19,6 +19,9 @@
 
 ### Features
 
+* add generic privacy patches ([b484837](https://github.com/xob0t/xob0t-morphe-patches/commit/b484837))
+* hide Avito ad network layouts ([ba09aea](https://github.com/xob0t/xob0t-morphe-patches/commit/ba09aea))
+* add Avito privacy patch ([0c21fbb](https://github.com/xob0t/xob0t-morphe-patches/commit/0c21fbb))
 * add Avito Avi bottom tab patch ([453aa11](https://github.com/xob0t/xob0t-morphe-patches/commit/453aa11487d0dde033b9e5820a358977b8505110))
 
 ## [1.0.1](https://github.com/xob0t/xob0t-morphe-patches/compare/v1.0.0...v1.0.1) (2026-05-08)
