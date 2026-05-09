@@ -21,6 +21,8 @@ private const val OZON_TILE_SCROLL_PREFIX =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilescroll/"
 private const val OZON_TILE_GRID2_BANNER_VIEW_MAPPER =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tileGrid2/presentation/viewmapper/TileGrid2BannerViewMapper;"
+private const val OZON_TILE_GRID2_CONFIG =
+    "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tileGrid2/data/TileGrid2Config;"
 private const val OZON_TILE_GRID3_PREFIX =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilegrid3/"
 private const val OZON_TILE_GRID3_CONFIG =
@@ -70,6 +72,13 @@ private fun Method.isInstallmentV4ParserMethod() =
 
 private fun Method.isTileGrid3ParseMethod(classType: String) =
     classType == OZON_TILE_GRID3_CONFIG &&
+        name == "parse" &&
+        returnType == "Ljava/util/List;" &&
+        parameterTypes.size == 1 &&
+        hasImplementation()
+
+private fun Method.isTileGrid2ParseMethod(classType: String) =
+    classType == OZON_TILE_GRID2_CONFIG &&
         name == "parse" &&
         returnType == "Ljava/util/List;" &&
         parameterTypes.size == 1 &&
@@ -130,6 +139,7 @@ val removeOzonAdsPatch = bytecodePatch(
         var patchedTileScrollListMapMethods = 0
         var patchedTileScrollBindMethods = 0
         var patchedTileGrid2BannerCanMapMethods = 0
+        var patchedInfiniteTileGrid2ParseMethods = 0
         var patchedTileGrid3CanMapMethods = 0
         var patchedTileGrid3ListMapMethods = 0
         var patchedTileGrid3BindMethods = 0
@@ -498,6 +508,40 @@ val removeOzonAdsPatch = bytecodePatch(
                     }
                 }
 
+                classType == OZON_TILE_GRID2_CONFIG -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isTileGrid2ParseMethod(classType)) {
+                            method.addInstructions(
+                                0,
+                                """
+                                    invoke-virtual {p1}, LK30/b;->a()Lw20/a;
+                                    move-result-object v0
+                                    invoke-virtual {v0}, Ljava/lang/Object;->toString()Ljava/lang/String;
+                                    move-result-object v0
+                                    const-string v1, "pageType=pdp"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "pagination_app_my_account"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "recoms_pagination_favorites_app"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-eqz v1, :ozon_tile_grid2_continue
+                                    :ozon_tile_grid2_hide
+                                    invoke-static {}, Ljava/util/Collections;->emptyList()Ljava/util/List;
+                                    move-result-object v0
+                                    return-object v0
+                                    :ozon_tile_grid2_continue
+                                """,
+                            )
+                            patchedInfiniteTileGrid2ParseMethods++
+                        }
+                    }
+                }
+
                 classType.startsWith(OZON_TILE_GRID3_PREFIX) -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         when {
@@ -628,6 +672,7 @@ val removeOzonAdsPatch = bytecodePatch(
             patchedTileScrollListMapMethods == 0 &&
             patchedTileScrollBindMethods == 0 &&
             patchedTileGrid2BannerCanMapMethods == 0 &&
+            patchedInfiniteTileGrid2ParseMethods == 0 &&
             patchedTileGrid3CanMapMethods == 0 &&
             patchedTileGrid3ListMapMethods == 0 &&
             patchedTileGrid3BindMethods == 0 &&
@@ -662,6 +707,7 @@ val removeOzonAdsPatch = bytecodePatch(
                 "$patchedTileScrollListMapMethods tile scroll list map methods, and " +
                 "$patchedTileScrollBindMethods tile scroll bind methods, " +
                 "$patchedTileGrid2BannerCanMapMethods tile grid2 banner canMap methods, " +
+                "$patchedInfiniteTileGrid2ParseMethods infinite tile grid2 parse methods, " +
                 "$patchedTileGrid3CanMapMethods tile grid3 canMap methods, " +
                 "$patchedTileGrid3ListMapMethods tile grid3 list map methods, " +
                 "$patchedTileGrid3BindMethods tile grid3 bind methods, " +
