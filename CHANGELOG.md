@@ -1,3 +1,10 @@
+# [1.2.0-dev.2](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.1...v1.2.0-dev.2) (2026-05-10)
+
+
+### Bug Fixes
+
+* harden Avito patches and disable universal defaults ([a0d62f4](https://github.com/xob0t/morphe-patches/commit/a0d62f4aa965ceb796a3d790cb98e0e590a3f519))
+
 # [1.2.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0-dev.1) (2026-05-09)
 
 
