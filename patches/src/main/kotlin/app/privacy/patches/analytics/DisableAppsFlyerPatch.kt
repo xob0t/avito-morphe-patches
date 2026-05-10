@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableAppsFlyerPatch = resourcePatch(
     name = "Disable AppsFlyer",
     description = "Disables AppsFlyer install referrer and attribution manifest entry points.",
-    default = true,
+    default = false,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->

@@ -140,7 +140,7 @@ private fun Method.hasUsbDebugPatchTarget(): Boolean {
 val spoofUsbDebuggingStatusPatch = bytecodePatch(
     name = "Spoof USB debugging status",
     description = "Spoofs USB debugging and related developer settings through common Android APIs.",
-    default = true,
+    default = false,
 ) {
     execute {
         var patchedSettingsIntReads = 0

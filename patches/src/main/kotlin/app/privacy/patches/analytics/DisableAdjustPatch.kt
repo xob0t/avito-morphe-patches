@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableAdjustPatch = resourcePatch(
     name = "Disable Adjust",
     description = "Disables Adjust attribution manifest entry points.",
-    default = true,
+    default = false,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->

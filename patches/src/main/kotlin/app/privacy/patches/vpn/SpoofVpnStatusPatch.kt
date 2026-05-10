@@ -228,7 +228,7 @@ private fun Method.hasVpnNetworkRequestBuilder(): Boolean {
 val spoofVpnStatusPatch = bytecodePatch(
     name = "Spoof VPN status",
     description = "Spoofs VPN state through common Android network APIs.",
-    default = true,
+    default = false,
 ) {
     execute {
         var patchedHasTransportCalls = 0

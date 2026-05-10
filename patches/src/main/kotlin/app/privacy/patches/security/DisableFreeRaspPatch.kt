@@ -41,7 +41,7 @@ private fun MethodReference.isFreeRaspStartCandidate(): Boolean =
 val disableFreeRaspPatch = bytecodePatch(
     name = "Disable freeRASP",
     description = "Disables the freeRASP mobile security SDK startup.",
-    default = true,
+    default = false,
 ) {
     execute {
         var patchedStartCalls = 0

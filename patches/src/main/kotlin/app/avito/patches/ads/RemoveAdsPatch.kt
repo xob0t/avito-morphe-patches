@@ -6,6 +6,7 @@ import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.patch.resourcePatch
 import org.w3c.dom.Element
 import org.w3c.dom.Node
+import java.io.FileNotFoundException
 
 private val adPermissions = setOf(
     "com.google.android.gms.permission.AD_ID",
@@ -102,18 +103,28 @@ private val removeAdResourcesPatch = resourcePatch {
             }
         }
 
+        var hiddenLayouts = 0
+        var missingLayouts = 0
+
         (hiddenRewardLayouts + hiddenAdLayouts).forEach { path ->
-            document(path).use { document ->
-                document.documentElement.apply {
-                    setAttribute("android:visibility", "gone")
-                    setAttribute("android:layout_width", "0dp")
-                    setAttribute("android:layout_height", "0dp")
-                    setAttribute("android:clickable", "false")
-                    setAttribute("android:focusable", "false")
-                    setAttribute("android:importantForAccessibility", "no")
+            try {
+                document(path).use { document ->
+                    document.documentElement.apply {
+                        setAttribute("android:visibility", "gone")
+                        setAttribute("android:layout_width", "0dp")
+                        setAttribute("android:layout_height", "0dp")
+                        setAttribute("android:clickable", "false")
+                        setAttribute("android:focusable", "false")
+                        setAttribute("android:importantForAccessibility", "no")
+                    }
                 }
+                hiddenLayouts++
+            } catch (_: FileNotFoundException) {
+                missingLayouts++
             }
         }
+
+        println("Remove ads: hid $hiddenLayouts ad/reward layouts, skipped $missingLayouts missing layouts.")
     }
 }
 

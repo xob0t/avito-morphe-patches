@@ -41,7 +41,7 @@ private val disableAppMetricaManifestPatch = resourcePatch {
 val disableAppMetricaPatch = bytecodePatch(
     name = "Disable AppMetrica",
     description = "Disables AppMetrica and legacy Yandex Metrica SDK entry points.",
-    default = true,
+    default = false,
 ) {
     dependsOn(disableAppMetricaManifestPatch)
 

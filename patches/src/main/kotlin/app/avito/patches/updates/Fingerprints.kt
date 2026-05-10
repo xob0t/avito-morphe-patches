@@ -4,6 +4,7 @@ import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.methodCall
 
 object ForceUpdateOpenFingerprint : Fingerprint(
+    definingClass = "Lcom/avito/android/version_conflict/",
     returnType = "V",
     parameters = listOf(
         "Lcom/avito/android/forceupdate/screens/forceupdateroot/ForceUpdateRootOpenParams;",
@@ -14,7 +15,4 @@ object ForceUpdateOpenFingerprint : Fingerprint(
             name = "startActivity",
         ),
     ),
-    custom = { _, classDef ->
-        classDef.type == "Lcom/avito/android/version_conflict/o;"
-    },
 )

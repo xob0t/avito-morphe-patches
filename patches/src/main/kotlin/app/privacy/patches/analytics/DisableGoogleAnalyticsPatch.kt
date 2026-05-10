@@ -7,7 +7,7 @@ import org.w3c.dom.Element
 val disableGoogleAnalyticsPatch = resourcePatch(
     name = "Disable Google Analytics",
     description = "Disables legacy Google Analytics manifest entry points.",
-    default = true,
+    default = false,
 ) {
     execute {
         document("AndroidManifest.xml").use { document ->
