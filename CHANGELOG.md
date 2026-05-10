@@ -1,3 +1,10 @@
+# [1.2.0-dev.5](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2026-05-10)
+
+
+### Bug Fixes
+
+* hide Ozon profile recommendations and banner ([8c496f3](https://github.com/xob0t/morphe-patches/commit/8c496f30a5ed8de5c278f99a405c947838a1604e))
+
 # [1.2.0-dev.4](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.3...v1.2.0-dev.4) (2026-05-10)
 
 
