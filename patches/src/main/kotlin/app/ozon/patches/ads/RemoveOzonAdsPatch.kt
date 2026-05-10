@@ -32,6 +32,9 @@ private const val OZON_TILE_GRID3_PREFIX =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilegrid3/"
 private const val OZON_TILE_GRID3_CONFIG =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/sku/tilegrid3/data/TileGrid3Config;"
+private const val OZON_OBJECT_GRID_ONE_BANNER_VIEW_MAPPER =
+    "Lru/ozon/app/android/universalwidgets/widgets/uw/old/uobject/gridone/singleitem/" +
+        "UniversalObjectGridOneSingleItemBannerViewMapper;"
 private const val OZON_SEARCH_EXPANDABLE_CELLS_PREFIX =
     "Lru/ozon/app/android/search/widgets/expandableCells/"
 private const val OZON_SEARCH_WARLOCK_VIEW_MODEL =
@@ -45,6 +48,8 @@ private const val OZON_CELL_V2_VIEW_HOLDER =
 
 private const val OZON_PDP_PAGE_TYPE_MARKER = "pageType=pdp"
 private const val OZON_PROFILE_GRID_CONTAINER_MARKER = "pagination_app_my_account"
+private const val OZON_PERSONAL_TILE_GRID_MARKER = "personalTitle=true"
+private const val OZON_PERSONAL_TILE_GRID_JSON_MARKER = "\\\"personalTitle\\\":true"
 private const val OZON_FAVORITES_GRID_CONTAINER_MARKER = "recoms_pagination_favorites_app"
 private const val OZON_SEARCH_WARLOCK_MARKER = "generic-warlock"
 private const val OZON_SELECT_CELL_MARKER = "FIRST15"
@@ -92,6 +97,13 @@ private fun Method.isTileGrid2ParseMethod(classType: String) =
     classType == OZON_TILE_GRID2_CONFIG &&
         name == "parse" &&
         returnType == "Ljava/util/List;" &&
+        parameterTypes.size == 1 &&
+        hasImplementation()
+
+private fun Method.isObjectGridOneBannerCanMapMethod(classType: String) =
+    classType == OZON_OBJECT_GRID_ONE_BANNER_VIEW_MAPPER &&
+        name == "canMap" &&
+        returnType == "Z" &&
         parameterTypes.size == 1 &&
         hasImplementation()
 
@@ -173,6 +185,7 @@ val removeOzonAdsPatch = bytecodePatch(
         var patchedTileGrid3ListMapMethods = 0
         var patchedTileGrid3BindMethods = 0
         var patchedTileGrid3ParseMethods = 0
+        var patchedObjectGridOneBannerCanMapMethods = 0
         var patchedSearchExpandableCanMapMethods = 0
         var patchedSearchExpandableListMapMethods = 0
         var patchedSearchExpandableBindMethods = 0
@@ -578,6 +591,14 @@ val removeOzonAdsPatch = bytecodePatch(
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
                                     if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "$OZON_PERSONAL_TILE_GRID_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "$OZON_PERSONAL_TILE_GRID_JSON_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
                                     const-string v1, "$OZON_FAVORITES_GRID_CONTAINER_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
@@ -590,6 +611,21 @@ val removeOzonAdsPatch = bytecodePatch(
                                 """,
                             )
                             patchedInfiniteTileGrid2ParseMethods++
+                        }
+                    }
+                }
+
+                classType == OZON_OBJECT_GRID_ONE_BANNER_VIEW_MAPPER -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isObjectGridOneBannerCanMapMethod(classType)) {
+                            method.addInstructions(
+                                0,
+                                """
+                                    const/4 p0, 0x0
+                                    return p0
+                                """,
+                            )
+                            patchedObjectGridOneBannerCanMapMethods++
                         }
                     }
                 }
@@ -731,6 +767,7 @@ val removeOzonAdsPatch = bytecodePatch(
             patchedTileGrid3ListMapMethods == 0 &&
             patchedTileGrid3BindMethods == 0 &&
             patchedTileGrid3ParseMethods == 0 &&
+            patchedObjectGridOneBannerCanMapMethods == 0 &&
             patchedSearchExpandableCanMapMethods == 0 &&
             patchedSearchExpandableListMapMethods == 0 &&
             patchedSearchExpandableBindMethods == 0 &&
@@ -769,6 +806,7 @@ val removeOzonAdsPatch = bytecodePatch(
                 "$patchedTileGrid3ListMapMethods tile grid3 list map methods, " +
                 "$patchedTileGrid3BindMethods tile grid3 bind methods, " +
                 "$patchedTileGrid3ParseMethods tile grid3 parse methods, " +
+                "$patchedObjectGridOneBannerCanMapMethods object grid1 banner canMap methods, " +
                 "$patchedSearchExpandableCanMapMethods search expandable canMap methods, " +
                 "$patchedSearchExpandableListMapMethods search expandable list map methods, and " +
                 "$patchedSearchExpandableBindMethods search expandable bind methods, " +
