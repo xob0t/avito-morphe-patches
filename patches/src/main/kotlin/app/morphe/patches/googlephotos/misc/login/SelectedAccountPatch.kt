@@ -6,8 +6,12 @@ package app.morphe.patches.googlephotos.misc.login
 
 import app.morphe.patches.shared.compat.AppCompatibilities
 import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
-import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
+import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.util.getReference
+import app.morphe.util.indexOfFirstInstructionOrThrow
+import com.android.tools.smali.dexlib2.iface.reference.MethodReference
 
 @Suppress("unused")
 val selectedAccountPatch = bytecodePatch(
@@ -23,14 +27,22 @@ val selectedAccountPatch = bytecodePatch(
             "return-void",
         )
 
-        // 2) Make the frictionless-login eligibility check always succeed.
-        FrictionlessEligibilityFingerprint.method.addInstructions(
-            0,
-            """
-                const/4 p0, 0x1
-                return p0
-            """,
-        )
+        // 2) Keep the frictionless eligibility result intact, but prevent the
+        //    MicroG failure path from clearing the selected account.
+        FrictionlessEligibilityFingerprint.method.apply {
+            val clearSelectedAccountIndex = indexOfFirstInstructionOrThrow {
+                getReference<MethodReference>()?.let { ref ->
+                    ref.name == "o" &&
+                        ref.returnType == "V" &&
+                        ref.parameterTypes.toList() == listOf("I")
+                } == true
+            }
+            val accountHandlerClass = getInstruction(clearSelectedAccountIndex)
+                .getReference<MethodReference>()!!
+                .definingClass
+
+            replaceInstruction(clearSelectedAccountIndex, "invoke-virtual {p0}, $accountHandlerClass->p()V")
+        }
     }
 }
 
