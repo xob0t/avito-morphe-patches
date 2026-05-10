@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0-dev.2",
+  "version": "1.2.0-dev.3",
   "patches": [
     {
       "name": "Avito privacy",
@@ -173,7 +173,17 @@
           ]
         }
       ],
-      "options": []
+      "options": [
+        {
+          "key": "hideRecommendationGrids",
+          "title": "Hide recommendation grids",
+          "description": "Removes recommendation grids from product, profile, and favorites screens.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": true,
+          "values": null
+        }
+      ]
     },
     {
       "name": "Remove Wildberries ads",
@@ -198,7 +208,17 @@
           ]
         }
       ],
-      "options": []
+      "options": [
+        {
+          "key": "hideRecommendationGrids",
+          "title": "Hide recommendation grids",
+          "description": "Removes recommendation grids from cart and product screens.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": true,
+          "values": null
+        }
+      ]
     },
     {
       "name": "Remove ads",
