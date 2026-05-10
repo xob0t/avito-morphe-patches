@@ -1,3 +1,10 @@
+# [1.2.0-dev.4](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.3...v1.2.0-dev.4) (2026-05-10)
+
+
+### Bug Fixes
+
+* harden Ozon and Wildberries ads patches ([07f2837](https://github.com/xob0t/morphe-patches/commit/07f2837a765d3f9ad46f05d0d87ca2f23447e0d9))
+
 # [1.2.0-dev.3](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.2...v1.2.0-dev.3) (2026-05-10)
 
 
