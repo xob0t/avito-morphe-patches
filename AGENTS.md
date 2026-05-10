@@ -38,7 +38,7 @@ After generation, verify:
 Get-ChildItem patches\build\libs | Select-Object Name,Length
 ```
 
-For checked-in metadata, keep `patches-list.json` version consistent with `patches-bundle.json` and the release version format already used in the repo.
+Use generated metadata only for local verification. Do not include generated `patches-list.json` changes in normal feature or fix commits.
 
 ## CLI Patch Testing
 
@@ -85,3 +85,14 @@ The release workflow builds with:
 ```
 
 `dev` publishes pre-release builds. `main` publishes stable builds.
+
+Release-generated files are owned by semantic-release:
+
+```text
+CHANGELOG.md
+patches-bundle.json
+patches-list.json
+README.md
+```
+
+Do not edit or commit these files by hand for normal patch work. The release workflow regenerates them, sets the final `patches-list.json` version, and commits them in the release commit.

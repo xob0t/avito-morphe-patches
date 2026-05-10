@@ -3,6 +3,7 @@ package app.wildberries.patches.ads
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.patch.option
 import app.wildberries.patches.shared.Constants.COMPATIBILITY_WILDBERRIES
 import com.android.tools.smali.dexlib2.iface.Method
 
@@ -96,7 +97,16 @@ val removeWildberriesAdsPatch = bytecodePatch(
 ) {
     compatibleWith(COMPATIBILITY_WILDBERRIES)
 
+    val hideRecommendationGrids by option<Boolean>(
+        key = "hideRecommendationGrids",
+        title = "Hide recommendation grids",
+        description = "Removes recommendation grids from cart and product screens.",
+        default = true,
+    )
+
     execute {
+        val shouldHideRecommendationGrids = hideRecommendationGrids != false
+
         var patchedBannerWrapperNullableGetters = 0
         var patchedBannerWrapperListGetters = 0
         var patchedMainBannerListGetters = 0
@@ -220,7 +230,7 @@ val removeWildberriesAdsPatch = bytecodePatch(
                     }
                 }
 
-                CART_SCREEN_UI_STATE -> {
+                CART_SCREEN_UI_STATE -> if (shouldHideRecommendationGrids) {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isBooleanMethod("getRecommendationsInEmptyCartEnabled")) {
                             method.addInstructions(
@@ -235,7 +245,7 @@ val removeWildberriesAdsPatch = bytecodePatch(
                     }
                 }
 
-                CART_RECOMMENDATIONS_VIEW_MODEL -> {
+                CART_RECOMMENDATIONS_VIEW_MODEL -> if (shouldHideRecommendationGrids) {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         when {
                             method.isBooleanMethod("access\$shouldRecommendationsBeVisible") -> {
@@ -272,7 +282,7 @@ val removeWildberriesAdsPatch = bytecodePatch(
                     }
                 }
 
-                PRODUCT_CARD_SELLER_RECOMMENDATIONS_CONTROLLER -> {
+                PRODUCT_CARD_SELLER_RECOMMENDATIONS_CONTROLLER -> if (shouldHideRecommendationGrids) {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isVoidMethod("RecommendationsBlockController")) {
                             method.addInstructions(
@@ -371,7 +381,8 @@ val removeWildberriesAdsPatch = bytecodePatch(
         }
 
         println(
-            "Remove Wildberries ads: patched $patchedBannerWrapperNullableGetters banner wrapper object getters, " +
+            "Remove Wildberries ads: ${if (shouldHideRecommendationGrids) "hid" else "kept"} recommendation grids, " +
+                "patched $patchedBannerWrapperNullableGetters banner wrapper object getters, " +
                 "$patchedBannerWrapperListGetters banner wrapper list getters, " +
                 "$patchedMainBannerListGetters main banner list getters, " +
                 "$patchedMainBannerStateMethods main banner state methods, " +

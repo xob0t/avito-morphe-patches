@@ -3,6 +3,7 @@ package app.ozon.patches.ads
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.patch.option
 import app.ozon.patches.shared.Constants.COMPATIBILITY_OZON
 import com.android.tools.smali.dexlib2.iface.Method
 
@@ -126,7 +127,16 @@ val removeOzonAdsPatch = bytecodePatch(
 ) {
     compatibleWith(COMPATIBILITY_OZON)
 
+    val hideRecommendationGrids by option<Boolean>(
+        key = "hideRecommendationGrids",
+        title = "Hide recommendation grids",
+        description = "Removes recommendation grids from product, profile, and favorites screens.",
+        default = true,
+    )
+
     execute {
+        val shouldHideRecommendationGrids = hideRecommendationGrids != false
+
         var patchedAdCanMapMethods = 0
         var patchedAdListMapMethods = 0
         var patchedAdBindMethods = 0
@@ -343,7 +353,7 @@ val removeOzonAdsPatch = bytecodePatch(
                     }
                 }
 
-                classType.startsWith(OZON_REC_SHELF_PREFIX) -> {
+                shouldHideRecommendationGrids && classType.startsWith(OZON_REC_SHELF_PREFIX) -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         when {
                             method.isWidgetCanMapMethod() -> {
@@ -394,7 +404,7 @@ val removeOzonAdsPatch = bytecodePatch(
                     }
                 }
 
-                classType.startsWith(OZON_CROSS_SALE_PREFIX) -> {
+                shouldHideRecommendationGrids && classType.startsWith(OZON_CROSS_SALE_PREFIX) -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         when {
                             method.isListMapMethod() -> {
@@ -514,7 +524,7 @@ val removeOzonAdsPatch = bytecodePatch(
                     }
                 }
 
-                classType == OZON_TILE_GRID2_CONFIG -> {
+                shouldHideRecommendationGrids && classType == OZON_TILE_GRID2_CONFIG -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isTileGrid2ParseMethod(classType)) {
                             // These server-driven TileGrid2 containers are infinite recommendation grids with headers.
@@ -696,7 +706,8 @@ val removeOzonAdsPatch = bytecodePatch(
         }
 
         println(
-            "Remove Ozon ads: patched $patchedAdCanMapMethods ad canMap methods, " +
+            "Remove Ozon ads: ${if (shouldHideRecommendationGrids) "hid" else "kept"} recommendation grids, " +
+                "patched $patchedAdCanMapMethods ad canMap methods, " +
                 "$patchedAdListMapMethods ad list map methods, " +
                 "$patchedAdBindMethods ad bind methods, " +
                 "$patchedInstallmentCanMapMethods installment canMap methods, and " +
