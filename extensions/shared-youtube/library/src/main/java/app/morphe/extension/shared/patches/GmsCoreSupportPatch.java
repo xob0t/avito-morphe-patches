@@ -60,10 +60,10 @@ public class GmsCoreSupportPatch {
      * @return If the current package name is the same as the original unpatched app.
      *         If `GmsCore support` was not included during patching, this returns true;
      */
-    public static boolean isPackageNameOriginal() {
+    public static boolean isPackageNameOriginal(Context context) {
         String originalPackageName = getOriginalPackageName();
         return originalPackageName == null
-                || originalPackageName.equals(Utils.getContext().getPackageName());
+                || originalPackageName.equals(context.getPackageName());
     }
 
     private static void open(String queryOrLink) {
@@ -126,7 +126,7 @@ public class GmsCoreSupportPatch {
             // Verify the user has not included GmsCore for a root installation.
             // GmsCore Support changes the package name, but with a mounted installation
             // all manifest changes are ignored and the original package name is used.
-            if (isPackageNameOriginal()) {
+            if (isPackageNameOriginal(context)) {
                 Logger.printInfo(() -> "App is mounted with root, but GmsCore patch was included");
                 // Cannot use localize text here, since the app will load resources
                 // from the unpatched app and all patch strings are missing.
