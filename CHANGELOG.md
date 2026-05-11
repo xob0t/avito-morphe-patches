@@ -1,3 +1,18 @@
+# [1.2.0](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0) (2026-05-11)
+
+
+### Bug Fixes
+
+* harden Avito patches and disable universal defaults ([a0d62f4](https://github.com/xob0t/morphe-patches/commit/a0d62f4aa965ceb796a3d790cb98e0e590a3f519))
+* harden Ozon and Wildberries ads patches ([07f2837](https://github.com/xob0t/morphe-patches/commit/07f2837a765d3f9ad46f05d0d87ca2f23447e0d9))
+* hide Ozon profile recommendations and banner ([8c496f3](https://github.com/xob0t/morphe-patches/commit/8c496f30a5ed8de5c278f99a405c947838a1604e))
+
+
+### Features
+
+* add freeRASP disable patch ([5379135](https://github.com/xob0t/morphe-patches/commit/5379135d4632519b0e6d8c6ffe78987de391f1eb))
+* add recommendation grid options ([b003330](https://github.com/xob0t/morphe-patches/commit/b003330587da1282123e88345965886aeb3697bc))
+
 # [1.2.0-dev.5](https://github.com/xob0t/morphe-patches/compare/v1.2.0-dev.4...v1.2.0-dev.5) (2026-05-10)
 
 
