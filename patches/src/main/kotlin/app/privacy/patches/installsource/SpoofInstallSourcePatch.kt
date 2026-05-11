@@ -23,13 +23,6 @@ private fun MethodReference.isPackageManagerGetInstallerPackageName() =
         parameterTypes[0].toString() == "Ljava/lang/String;" &&
         returnType == "Ljava/lang/String;"
 
-private fun MethodReference.isPackageManagerGetInstallSourceInfo() =
-    definingClass == PACKAGE_MANAGER &&
-        name == "getInstallSourceInfo" &&
-        parameterTypes.size == 1 &&
-        parameterTypes[0].toString() == "Ljava/lang/String;" &&
-        returnType == INSTALL_SOURCE_INFO
-
 private fun MethodReference.isInstallSourceInfoPackageGetter() =
     definingClass == INSTALL_SOURCE_INFO &&
         name in setOf(
@@ -49,7 +42,6 @@ val spoofInstallSourcePatch = bytecodePatch(
 ) {
     execute {
         var patchedInstallerPackageNameReads = 0
-        var patchedInstallSourceInfoReads = 0
 
         classDefForEach { classDef ->
             mutableClassDefBy(classDef).methods.forEach { method ->
@@ -81,27 +73,17 @@ val spoofInstallSourcePatch = bytecodePatch(
                             )
                             patchedInstallerPackageNameReads++
                         }
-
-                        reference.isPackageManagerGetInstallSourceInfo() -> {
-                            val moveResult = instructionList.getOrNull(index + 1) as? OneRegisterInstruction
-                                ?: return@forEachIndexed
-                            if (moveResult.opcode != Opcode.MOVE_RESULT_OBJECT) return@forEachIndexed
-
-                            method.replaceInstruction(index + 1, "const/4 v${moveResult.registerA}, 0x0")
-                            patchedInstallSourceInfoReads++
-                        }
                     }
                 }
             }
         }
 
-        if (patchedInstallerPackageNameReads == 0 && patchedInstallSourceInfoReads == 0) {
+        if (patchedInstallerPackageNameReads == 0) {
             throw PatchException("No install source call sites were found")
         }
 
         println(
-            "Spoof install source: patched $patchedInstallerPackageNameReads installer package reads " +
-                "and $patchedInstallSourceInfoReads install source info reads.",
+            "Spoof install source: patched $patchedInstallerPackageNameReads installer package reads.",
         )
     }
 }

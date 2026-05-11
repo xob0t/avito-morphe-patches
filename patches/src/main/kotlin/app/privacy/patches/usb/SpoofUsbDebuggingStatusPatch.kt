@@ -126,7 +126,9 @@ private fun Method.hasUsbDebugPatchTarget(): Boolean {
         when {
             reference.isDebuggerStateRead() -> true
             reference.isSettingsGetInt() && settingRegister != null ->
-                instructions.constantStringForRegisterBefore(index, settingRegister) in USB_DEBUG_INTEGER_SETTINGS
+                instructions.constantStringForRegisterBefore(index, settingRegister)
+                    ?.let { it in USB_DEBUG_INTEGER_SETTINGS }
+                    ?: true
 
             reference.isSettingsGetString() && settingRegister != null ->
                 instructions.constantStringForRegisterBefore(index, settingRegister) in USB_DEBUG_STRING_SETTINGS
@@ -144,6 +146,7 @@ val spoofUsbDebuggingStatusPatch = bytecodePatch(
 ) {
     execute {
         var patchedSettingsIntReads = 0
+        var patchedDynamicSettingsIntReads = 0
         var patchedSettingsStringReads = 0
         var patchedDebuggerStateReads = 0
 
@@ -160,14 +163,20 @@ val spoofUsbDebuggingStatusPatch = bytecodePatch(
                         reference.isSettingsGetInt() -> {
                             val settingRegister = instruction.registers().getOrNull(1) ?: return@forEachIndexed
                             val settingName = instructions.constantStringForRegisterBefore(index, settingRegister)
-                            if (settingName !in USB_DEBUG_INTEGER_SETTINGS) return@forEachIndexed
+                            if (settingName != null && settingName !in USB_DEBUG_INTEGER_SETTINGS) {
+                                return@forEachIndexed
+                            }
 
                             val moveResult = instructions.getOrNull(index + 1) as? OneRegisterInstruction
                                 ?: return@forEachIndexed
                             if (moveResult.opcode != Opcode.MOVE_RESULT) return@forEachIndexed
 
                             method.replaceInstruction(index + 1, "const/4 v${moveResult.registerA}, 0x0")
-                            patchedSettingsIntReads++
+                            if (settingName == null) {
+                                patchedDynamicSettingsIntReads++
+                            } else {
+                                patchedSettingsIntReads++
+                            }
                         }
 
                         reference.isSettingsGetString() -> {
@@ -202,6 +211,7 @@ val spoofUsbDebuggingStatusPatch = bytecodePatch(
 
         if (
             patchedSettingsIntReads == 0 &&
+            patchedDynamicSettingsIntReads == 0 &&
             patchedSettingsStringReads == 0 &&
             patchedDebuggerStateReads == 0
         ) {
@@ -210,6 +220,7 @@ val spoofUsbDebuggingStatusPatch = bytecodePatch(
 
         println(
             "Spoof USB debugging status: patched $patchedSettingsIntReads settings int reads, " +
+                "$patchedDynamicSettingsIntReads dynamic settings int reads, " +
                 "$patchedSettingsStringReads settings string reads, and " +
                 "$patchedDebuggerStateReads debugger state reads.",
         )
