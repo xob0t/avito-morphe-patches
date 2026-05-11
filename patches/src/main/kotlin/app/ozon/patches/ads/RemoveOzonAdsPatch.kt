@@ -45,6 +45,10 @@ private const val OZON_CELL_LIST_V2_MAPPER =
     "Lru/ozon/app/android/widgets/commonTextWidget/cellList/core/CellListV2Mapper;"
 private const val OZON_CELL_V2_VIEW_HOLDER =
     "Lru/ozon/app/android/widgets/commonTextWidget/cellList/presentation/CellV2ViewHolder;"
+private const val OZON_COMMON_CELL_V2_VIEW_HOLDER =
+    "Lru/ozon/app/android/common/cellList/v2/presentation/CellV2ViewHolder;"
+private const val OZON_IMAGE_TITLE_SUBTITLE_CELL_V2_HOLDER_SUFFIX =
+    "/atoms/v3/holders/cell/image/ImageTitleSubtitleCellV2Holder;"
 
 private const val OZON_PDP_PAGE_TYPE_MARKER = "pageType=pdp"
 private const val OZON_PROFILE_GRID_CONTAINER_MARKER = "pagination_app_my_account"
@@ -53,6 +57,7 @@ private const val OZON_PERSONAL_TILE_GRID_JSON_MARKER = "\\\"personalTitle\\\":t
 private const val OZON_FAVORITES_GRID_CONTAINER_MARKER = "recoms_pagination_favorites_app"
 private const val OZON_SEARCH_WARLOCK_MARKER = "generic-warlock"
 private const val OZON_SELECT_CELL_MARKER = "FIRST15"
+private const val OZON_SELECT_TITLE_MARKER = "Ozon Селект"
 
 private fun Method.hasImplementation() = implementation != null
 
@@ -135,6 +140,22 @@ private fun Method.isCellV2ViewHolderBind(classType: String) =
         parameterTypes.size == 2 &&
         hasImplementation()
 
+private fun Method.isCommonCellV2ViewHolderBind(classType: String) =
+    classType == OZON_COMMON_CELL_V2_VIEW_HOLDER &&
+        name == "bind" &&
+        returnType == "V" &&
+        parameterTypes.size == 2 &&
+        parameterTypes[0].toString() == "Lru/ozon/app/android/common/cellList/v2/presentation/CellV2VO;" &&
+        hasImplementation()
+
+private fun Method.isImageTitleSubtitleCellV2Bind(classType: String) =
+    classType.endsWith(OZON_IMAGE_TITLE_SUBTITLE_CELL_V2_HOLDER_SUFFIX) &&
+        name == "onBind" &&
+        returnType == "V" &&
+        parameterTypes.size == 1 &&
+        parameterTypes[0].toString().endsWith("/atoms/data/cell/ImageTitleSubtitleCellDTO;") &&
+        hasImplementation()
+
 private fun Method.isBigPromoNavbarLayoutMethod(classType: String) =
     classType == OZON_BIG_PROMO_NAVBAR_VIEW &&
         name == "onLayout" &&
@@ -209,11 +230,90 @@ val removeOzonAdsPatch = bytecodePatch(
         var patchedSearchWarlockDesignSystemAtomMapperMethods = 0
         var patchedSearchWarlockCellListV2MapperMethods = 0
         var patchedOzonSelectCellV2BindMethods = 0
+        var patchedOzonSelectCommonCellV2BindMethods = 0
+        var patchedOzonSelectImageCellBindMethods = 0
 
         classDefForEach { classDef ->
             val classType = classDef.type
 
             when {
+                classType == OZON_COMMON_CELL_V2_VIEW_HOLDER -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isCommonCellV2ViewHolderBind(classType)) {
+                            method.addInstructions(
+                                0,
+                                """
+                                    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+                                    move-result-object v0
+                                    const-string v1, "$OZON_SELECT_CELL_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_common_cell_v2_hide
+                                    const-string v1, "$OZON_SELECT_TITLE_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-eqz v1, :ozon_common_cell_v2_continue
+                                    :ozon_common_cell_v2_hide
+                                    iget-object v0, p0, Landroidx/recyclerview/widget/RecyclerView${'$'}ViewHolder;->itemView:Landroid/view/View;
+                                    invoke-virtual {v0}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup${'$'}LayoutParams;
+                                    move-result-object v1
+                                    if-eqz v1, :ozon_common_cell_v2_hidden_return
+                                    const/4 v0, 0x0
+                                    iput v0, v1, Landroid/view/ViewGroup${'$'}LayoutParams;->height:I
+                                    :ozon_common_cell_v2_hidden_return
+                                    return-void
+                                    :ozon_common_cell_v2_continue
+                                """,
+                            )
+                            patchedOzonSelectCommonCellV2BindMethods++
+                        }
+                    }
+                }
+
+                classType.endsWith(OZON_IMAGE_TITLE_SUBTITLE_CELL_V2_HOLDER_SUFFIX) -> {
+                    mutableClassDefBy(classDef).methods.forEach { method ->
+                        if (method.isImageTitleSubtitleCellV2Bind(classType)) {
+                            val atomV3Type = when {
+                                classType.startsWith("Lru/ozon/app/android/") -> {
+                                    "Lru/ozon/app/android/atoms/v3/AtomV3;"
+                                }
+                                classType.startsWith("Lru/ozon/uni/") -> {
+                                    "Lru/ozon/uni/atoms/v3/AtomV3;"
+                                }
+                                else -> return@forEach
+                            }
+
+                            method.addInstructions(
+                                0,
+                                """
+                                    invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
+                                    move-result-object v0
+                                    const-string v1, "$OZON_SELECT_CELL_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_image_title_subtitle_hide
+                                    const-string v1, "$OZON_SELECT_TITLE_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-eqz v1, :ozon_image_title_subtitle_continue
+                                    :ozon_image_title_subtitle_hide
+                                    invoke-virtual {p0}, $atomV3Type->getContainerView()Landroid/view/View;
+                                    move-result-object v0
+                                    invoke-virtual {v0}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup${'$'}LayoutParams;
+                                    move-result-object v1
+                                    if-eqz v1, :ozon_image_title_subtitle_hidden_return
+                                    const/4 v0, 0x0
+                                    iput v0, v1, Landroid/view/ViewGroup${'$'}LayoutParams;->height:I
+                                    :ozon_image_title_subtitle_hidden_return
+                                    return-void
+                                    :ozon_image_title_subtitle_continue
+                                """,
+                            )
+                            patchedOzonSelectImageCellBindMethods++
+                        }
+                    }
+                }
+
                 classType == OZON_CELL_V2_VIEW_HOLDER -> {
                     mutableClassDefBy(classDef).methods.forEach { method ->
                         if (method.isCellV2ViewHolderBind(classType)) {
@@ -801,7 +901,9 @@ val removeOzonAdsPatch = bytecodePatch(
             patchedSearchWarlockRequestMethods == 0 &&
             patchedSearchWarlockDesignSystemAtomMapperMethods == 0 &&
             patchedSearchWarlockCellListV2MapperMethods == 0 &&
-            patchedOzonSelectCellV2BindMethods == 0
+            patchedOzonSelectCellV2BindMethods == 0 &&
+            patchedOzonSelectCommonCellV2BindMethods == 0 &&
+            patchedOzonSelectImageCellBindMethods == 0
         ) {
             throw PatchException("No Ozon ad, installment, or recommendation widget methods were found")
         }
@@ -841,7 +943,9 @@ val removeOzonAdsPatch = bytecodePatch(
                 "$patchedSearchWarlockRequestMethods search Warlock request methods, " +
                 "$patchedSearchWarlockDesignSystemAtomMapperMethods search Warlock design-system atom mapper methods, and " +
                 "$patchedSearchWarlockCellListV2MapperMethods search Warlock cell-list V2 mapper methods, and " +
-                "$patchedOzonSelectCellV2BindMethods Ozon Select cell V2 bind methods.",
+                "$patchedOzonSelectCellV2BindMethods Ozon Select cell V2 bind methods, " +
+                "$patchedOzonSelectCommonCellV2BindMethods Ozon Select common cell V2 bind methods, and " +
+                "$patchedOzonSelectImageCellBindMethods Ozon Select image cell bind methods.",
         )
     }
 }
