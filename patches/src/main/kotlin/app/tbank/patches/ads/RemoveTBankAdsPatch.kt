@@ -1,6 +1,9 @@
 package app.tbank.patches.ads
 
 import app.morphe.patcher.patch.resourcePatch
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.extensions.InstructionExtensions.instructionsOrNull
+import app.morphe.patcher.patch.bytecodePatch
 import app.tbank.patches.shared.Constants.COMPATIBILITY_TBANK
 import org.w3c.dom.Element
 import java.io.FileNotFoundException
@@ -41,6 +44,65 @@ private val offerLayoutFiles = listOf(
     "res/layout/offers_ui_view_main_offer.xml",
 )
 
+private val productStreamLayoutFiles = listOf(
+    "res/layout/accounts_list_applications_item_gallery_teaser_item_b.xml",
+    "res/layout/accounts_list_applications_item_gallery_teaser_item_m.xml",
+    "res/layout/accounts_list_applications_item_gallery_teaser_item_s.xml",
+    "res/layout/accounts_list_common_ui_banner_content_default_layout.xml",
+    "res/layout/accounts_list_common_ui_banner_content_layout.xml",
+    "res/layout/accounts_list_common_ui_banner_layout.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_banner_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_categories_widget_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_category_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_for_shopping_button_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_partner_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_partner_shimmer_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_partners_widget_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_product_image_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_product_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_product_redesign_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_product_shimmer_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_products_title_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_shelf_widget_item.xml",
+    "res/layout/accounts_list_main_shopping_sphere_ui_title_item.xml",
+    "res/layout/accounts_list_main_sphere_my_house_auto_skeleton.xml",
+    "res/layout/accounts_list_main_sphere_my_house_auto_title.xml",
+    "res/layout/accounts_list_main_sphere_onboarding_button.xml",
+    "res/layout/accounts_list_main_sphere_onboarding_item.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_carousel_item.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_constructor_widget_item.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_discovery_carousel_item.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_main_discovery_carousel.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_main_carousel.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_offers.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_shimmer.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_small_banner_compilation.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_small_banner_default.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_to_travel_button_item.xml",
+    "res/layout/accounts_list_main_travel_sphere_ui_widget.xml",
+    "res/layout/accounts_list_my_auto_zero_big_item.xml",
+    "res/layout/accounts_list_my_auto_zero_full_item.xml",
+    "res/layout/accounts_list_my_auto_zero_small_item.xml",
+    "res/layout/accounts_list_my_auto_zero_wide_item.xml",
+    "res/layout/accounts_list_my_home_zero_big_item.xml",
+    "res/layout/accounts_list_my_home_zero_small_item.xml",
+    "res/layout/accounts_list_my_home_zero_wide_item.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_2_teaser.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_3_teaser.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_4_teaser.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_teaser_item_b.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_teaser_item_m.xml",
+    "res/layout/main_page_showcase_teasers_item_gallery_teaser_item_s.xml",
+)
+
+private val sphereFeatureToggleClasses = setOf(
+    "Lru/tinkoff/mb/featuretoggles/main/page/toggles/AccountsShoppingSphere126239Feature;",
+    "Lru/tinkoff/mb/featuretoggles/main/page/toggles/MainSpheresAutoRemote128879Feature;",
+    "Lru/tinkoff/mb/featuretoggles/main/page/toggles/MainSpheresHomeRemote128878Feature;",
+    "Lru/tinkoff/mb/featuretoggles/main/page/toggles/MainSpheresOnboardingRemote128880Feature;",
+    "Lru/tinkoff/mb/featuretoggles/main/page/toggles/MainSpheresTravelActiveRemote127476Feature;",
+)
+
 private fun Element.walk(): Sequence<Element> = sequence {
     yield(this@walk)
 
@@ -53,30 +115,49 @@ private fun Element.walk(): Sequence<Element> = sequence {
 
 private fun Element.hideView() {
     setAttribute("android:visibility", "gone")
+    setAttribute("android:alpha", "0.0")
     setAttribute("android:layout_width", "0dp")
     setAttribute("android:layout_height", "0dp")
+    setAttribute("android:maxHeight", "0dp")
     setAttribute("android:minHeight", "0dp")
+    setAttribute("android:padding", "0dp")
+    setAttribute("android:layout_margin", "0dp")
+    setAttribute("android:layout_marginTop", "0dp")
+    setAttribute("android:layout_marginBottom", "0dp")
+    setAttribute("android:layout_marginStart", "0dp")
+    setAttribute("android:layout_marginEnd", "0dp")
+    setAttribute("android:textSize", "0sp")
+    setAttribute("android:textColor", "@android:color/transparent")
+    setAttribute("android:scaleX", "0.0")
+    setAttribute("android:scaleY", "0.0")
     setAttribute("android:clickable", "false")
+    setAttribute("android:enabled", "false")
     setAttribute("android:focusable", "false")
     setAttribute("android:importantForAccessibility", "no")
+}
+
+private fun Element.hideLayoutRoot() {
+    hideView()
+
+    val nodes = childNodes
+    for (index in 0 until nodes.length) {
+        val child = nodes.item(index)
+        if (child is Element) child.hideView()
+    }
 }
 
 private fun Element.markInvisibleViewState() {
     setAttribute("app:layout_viewState", "invisible")
 }
 
-@Suppress("unused")
-val removeTBankAdsPatch = resourcePatch(
-    name = "Remove TBank ads",
-    description = "Removes TBank stories and promotional surfaces.",
-    default = true,
-) {
+private val removeTBankAdResourcesPatch = resourcePatch {
     compatibleWith(COMPATIBILITY_TBANK)
 
     execute {
         var hiddenStoryViews = 0
         var collapsedStoryAppBars = 0
         var hiddenOfferViews = 0
+        var hiddenProductViews = 0
         var missingLayouts = 0
 
         storyLayoutFiles.forEach { path ->
@@ -119,10 +200,69 @@ val removeTBankAdsPatch = resourcePatch(
             }
         }
 
+        productStreamLayoutFiles.forEach { path ->
+            try {
+                document(path).use { document ->
+                    document.documentElement.hideLayoutRoot()
+                    hiddenProductViews++
+                }
+            } catch (_: FileNotFoundException) {
+                missingLayouts++
+            }
+        }
+
         println(
             "Remove TBank ads: hid $hiddenStoryViews story views, " +
                 "collapsed $collapsedStoryAppBars story app bars, " +
-                "hid $hiddenOfferViews offer views, skipped $missingLayouts missing layouts.",
+                "hid $hiddenOfferViews offer views, " +
+                "hid $hiddenProductViews product stream views, " +
+                "skipped $missingLayouts missing layouts.",
         )
+    }
+}
+
+@Suppress("unused")
+val removeTBankAdsPatch = bytecodePatch(
+    name = "Remove TBank ads",
+    description = "Removes TBank stories and promotional surfaces.",
+    default = true,
+) {
+    compatibleWith(COMPATIBILITY_TBANK)
+    dependsOn(removeTBankAdResourcesPatch)
+
+    execute {
+        var disabledFeatureToggles = 0
+
+        classDefForEach { classDef ->
+            if (classDef.type !in sphereFeatureToggleClasses) return@classDefForEach
+
+            mutableClassDefBy(classDef).methods.forEach { method ->
+                if (method.instructionsOrNull == null) return@forEach
+
+                when (method.name) {
+                    "getId" -> {
+                        method.addInstructions(
+                            0,
+                            """
+                                const-string p0, "morphe/disabled/tbank/main/spheres"
+                                return-object p0
+                            """,
+                        )
+                        disabledFeatureToggles++
+                    }
+                    "getDefaultValue" -> {
+                        method.addInstructions(
+                            0,
+                            """
+                                sget-object p0, Ljava/lang/Boolean;->FALSE:Ljava/lang/Boolean;
+                                return-object p0
+                            """,
+                        )
+                    }
+                }
+            }
+        }
+
+        println("Remove TBank ads: disabled $disabledFeatureToggles promotional sphere feature toggles.")
     }
 }
