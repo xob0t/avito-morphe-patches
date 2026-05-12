@@ -1,3 +1,20 @@
+# [1.3.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.2.0...v1.3.0-dev.1) (2026-05-12)
+
+
+### Bug Fixes
+
+* **ozon:** hide catalog select banner ([7c98e09](https://github.com/xob0t/morphe-patches/commit/7c98e09152779e1a3c036e554084f3f27dec91a1))
+
+
+### Features
+
+* **privacy:** add emulator status spoof patch ([dd3ddd0](https://github.com/xob0t/morphe-patches/commit/dd3ddd0293119f294cbeda91570d20538435f7b7))
+* **privacy:** add install source spoof patch ([8440e45](https://github.com/xob0t/morphe-patches/commit/8440e45a573744c681bc6cf123babe2aa838f4bb))
+* **privacy:** add root status spoof patch ([06d833c](https://github.com/xob0t/morphe-patches/commit/06d833ced4ed9eff794ab5c9f48ac3cddc7a2f57))
+* **tbank:** add anti-tamper bypass patch ([49c99ed](https://github.com/xob0t/morphe-patches/commit/49c99edbb4565fd23ae05263338422f7934dcd01))
+* **tbank:** hide promotional product spheres ([f33625c](https://github.com/xob0t/morphe-patches/commit/f33625c60a212df8b83b55ce750aff0a38300d9e))
+* **tbank:** remove ads and stories ([9f4cf8b](https://github.com/xob0t/morphe-patches/commit/9f4cf8b9c4fc09b77c57de3a0a83e0467cb72c61))
+
 # [1.2.0](https://github.com/xob0t/morphe-patches/compare/v1.1.2...v1.2.0) (2026-05-11)
 
 

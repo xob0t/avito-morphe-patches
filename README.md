@@ -17,7 +17,7 @@ https://github.com/xob0t/morphe-patches
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.2.0](https://github.com/xob0t/morphe-patches/releases/tag/v1.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;17 patches total
+> **[v1.3.0-dev.1](https://github.com/xob0t/morphe-patches/releases/tag/v1.3.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;22 patches total
 <details open>
 <summary>📦 Avito&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
@@ -33,6 +33,22 @@ https://github.com/xob0t/morphe-patches
 | [Disable update prompts](#disable-update-prompts) | Prevents Avito's force-update screen opener from launching update screens. |  |
 | [Hide Avi bottom tab](#hide-avi-bottom-tab) | Removes the Avi assistant button from Avito's bottom navigation bar. |  |
 | [Remove ads](#remove-ads) | Disables Avito ads by removing ad SDK entry points and short-circuiting commercial banner loading. |  |
+
+</details>
+
+<details open>
+<summary>📦 TBank&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<br>
+
+**🎯 Supported versions:**
+
+| 7.34.0 | 🧪&nbsp;all |
+| :---: | :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Bypass anti-tamper](#bypass-anti-tamper) | Stubs TBank's native RASP executor calls and neutralizes tamper flag reporting. |  |
+| [Remove TBank ads](#remove-tbank-ads) | Removes TBank stories and promotional surfaces. |  |
 
 </details>
 
@@ -67,7 +83,7 @@ https://github.com/xob0t/morphe-patches
 </details>
 
 <details open>
-<summary>🌐 Universal&nbsp;&nbsp;•&nbsp;&nbsp;11 patches</summary>
+<summary>🌐 Universal&nbsp;&nbsp;•&nbsp;&nbsp;14 patches</summary>
 <br>
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
@@ -83,6 +99,9 @@ https://github.com/xob0t/morphe-patches
 | [Disable freeRASP](#disable-freerasp) | Disables the freeRASP mobile security SDK startup. |  |
 | [Spoof USB debugging status](#spoof-usb-debugging-status) | Spoofs USB debugging and related developer settings through common Android APIs. |  |
 | [Spoof VPN status](#spoof-vpn-status) | Spoofs VPN state through common Android network APIs. |  |
+| [Spoof emulator status](#spoof-emulator-status) | Spoofs emulator state through common Build, QEMU file, command, and system property checks. |  |
+| [Spoof install source](#spoof-install-source) | Spoofs package installer checks to report Google Play as the install source. |  |
+| [Spoof root status](#spoof-root-status) | Spoofs root state through common file, package, command, and build property checks. |  |
 
 </details>
 
