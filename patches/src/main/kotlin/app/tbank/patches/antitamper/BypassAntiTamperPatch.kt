@@ -14,7 +14,7 @@ import com.android.tools.smali.dexlib2.iface.reference.StringReference
 private const val RASP_EXECUTOR = "Lcom/t/core/miaf/ndk/Executor;"
 private const val SYSTEM = "Ljava/lang/System;"
 
-// ── RASP native libraries to prevent loading ──
+// RASP native libraries to prevent loading.
 
 private val RASP_NATIVE_LIBS = setOf(
     "i",
@@ -22,14 +22,14 @@ private val RASP_NATIVE_LIBS = setOf(
     "toolChecker",
 )
 
-// ── Flag parameter names reported to backend ──
+// Flag parameter names reported to backend.
 
 private val TAMPER_FLAG_NAMES = setOf(
     "clonnedApp_flag",
     "repackagedApk_flag",
 )
 
-// ── Helpers ──
+// Helpers.
 
 private fun Instruction.methodReferenceOrNull(): MethodReference? =
     (this as? ReferenceInstruction)?.reference as? MethodReference
@@ -75,7 +75,7 @@ val bypassAntiTamperPatch = bytecodePatch(
         classDefForEach { classDef ->
             val methods = classDef.methods.toList()
 
-            // ── Check if this class has any relevant call sites ──
+            // Check if this class has any relevant call sites.
 
             val hasRaspCalls = methods.any { method ->
                 method.instructionsOrNull?.toList()?.any { instr ->
@@ -106,7 +106,7 @@ val bypassAntiTamperPatch = bytecodePatch(
                     val reference = instruction.methodReferenceOrNull()
 
                     when {
-                        // ── Stub Executor.exec(long) → replace move-result-object with empty string ──
+                        // Stub Executor.exec(long) by replacing move-result-object with an empty string.
                         reference?.isRaspExec() == true -> {
                             method.replaceInstruction(index, "nop")
                             val moveResult = instructionList.getOrNull(index + 1) as? OneRegisterInstruction
@@ -119,13 +119,13 @@ val bypassAntiTamperPatch = bytecodePatch(
                             patchedRaspExecCalls++
                         }
 
-                        // ── Stub Executor.exec2(boolean) → NOP ──
+                        // Stub Executor.exec2(boolean).
                         reference?.isRaspExec2() == true -> {
                             method.replaceInstruction(index, "nop")
                             patchedRaspExec2Calls++
                         }
 
-                        // ── Block RASP native library loading ──
+                        // Block RASP native library loading.
                         reference?.isSystemLoadLibrary() == true -> {
                             for (scanIndex in index - 1 downTo maxOf(0, index - 4)) {
                                 val libName = instructionList[scanIndex].stringReferenceOrNull()
@@ -140,7 +140,7 @@ val bypassAntiTamperPatch = bytecodePatch(
                     }
                 }
 
-                // ── Neutralize tamper flag provider construction ──
+                // Neutralize tamper flag provider construction.
                 if (hasTamperFlag) {
                     val methodHasTamperString = instructionList.any { instr ->
                         instr.stringReferenceOrNull() in TAMPER_FLAG_NAMES
