@@ -4,8 +4,11 @@ import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patcher.patch.option
+import app.morphe.patcher.patch.resourcePatch
 import app.ozon.patches.shared.Constants.COMPATIBILITY_OZON
 import com.android.tools.smali.dexlib2.iface.Method
+import org.w3c.dom.Element
+import java.io.FileNotFoundException
 
 private const val OZON_AD_WIDGETS_PREFIX = "Lru/ozon/app/android/ads/widgets/"
 private const val OZON_INSTALLMENT_WIDGETS_PREFIX = "Lru/ozon/app/android/pdp/widgets/installmentPurchase/"
@@ -35,6 +38,7 @@ private const val OZON_TILE_GRID3_CONFIG =
 private const val OZON_OBJECT_GRID_ONE_BANNER_VIEW_MAPPER =
     "Lru/ozon/app/android/universalwidgets/widgets/uw/old/uobject/gridone/singleitem/" +
         "UniversalObjectGridOneSingleItemBannerViewMapper;"
+private const val OZON_OBJECT_GRID_ONE_LAYOUT = "res/layout/item_uobject_grid_one.xml"
 private const val OZON_SEARCH_EXPANDABLE_CELLS_PREFIX =
     "Lru/ozon/app/android/search/widgets/expandableCells/"
 private const val OZON_SEARCH_WARLOCK_VIEW_MODEL =
@@ -51,6 +55,9 @@ private const val OZON_IMAGE_TITLE_SUBTITLE_CELL_V2_HOLDER_SUFFIX =
     "/atoms/v3/holders/cell/image/ImageTitleSubtitleCellV2Holder;"
 
 private const val OZON_PDP_PAGE_TYPE_MARKER = "pageType=pdp"
+private const val OZON_CART_PAGE_TYPE_MARKER = "pageType=cart"
+private const val OZON_CART_RECOMMENDATION_MARKER = "recoms_pagination_cart"
+private const val OZON_BASKET_RECOMMENDATION_MARKER = "recoms_pagination_basket"
 private const val OZON_PROFILE_GRID_CONTAINER_MARKER = "pagination_app_my_account"
 private const val OZON_PERSONAL_TILE_GRID_MARKER = "personalTitle=true"
 private const val OZON_PERSONAL_TILE_GRID_JSON_MARKER = "\\\"personalTitle\\\":true"
@@ -178,6 +185,37 @@ private fun Method.isShellNavbarBgSetBackground(classType: String) =
         parameterTypes[0].toString() == "Landroid/graphics/drawable/Drawable;" &&
         hasImplementation()
 
+private fun Element.hideWidgetRoot() {
+    setAttribute("android:layout_width", "0dp")
+    setAttribute("android:layout_height", "0dp")
+    setAttribute("android:minWidth", "0dp")
+    setAttribute("android:minHeight", "0dp")
+    setAttribute("android:visibility", "gone")
+}
+
+private val removeOzonAdResourcesPatch = resourcePatch {
+    compatibleWith(COMPATIBILITY_OZON)
+
+    execute {
+        var hiddenObjectGridOneLayouts = 0
+        var missingLayouts = 0
+
+        try {
+            document(OZON_OBJECT_GRID_ONE_LAYOUT).use { document ->
+                document.documentElement.hideWidgetRoot()
+                hiddenObjectGridOneLayouts++
+            }
+        } catch (_: FileNotFoundException) {
+            missingLayouts++
+        }
+
+        println(
+            "Remove Ozon ads resources: hid $hiddenObjectGridOneLayouts object grid1 layouts, " +
+                "skipped $missingLayouts missing layouts.",
+        )
+    }
+}
+
 @Suppress("unused")
 val removeOzonAdsPatch = bytecodePatch(
     name = "Remove Ozon ads",
@@ -185,11 +223,12 @@ val removeOzonAdsPatch = bytecodePatch(
     default = true,
 ) {
     compatibleWith(COMPATIBILITY_OZON)
+    dependsOn(removeOzonAdResourcesPatch)
 
     val hideRecommendationGrids by option<Boolean>(
         key = "hideRecommendationGrids",
         title = "Hide recommendation grids",
-        description = "Removes recommendation grids from product, profile, and favorites screens.",
+        description = "Removes recommendation grids from product, cart, profile, and favorites screens.",
         default = true,
     )
 
@@ -710,6 +749,18 @@ val removeOzonAdsPatch = bytecodePatch(
                                     invoke-virtual {p1}, Ljava/lang/Object;->toString()Ljava/lang/String;
                                     move-result-object v0
                                     const-string v1, "$OZON_PDP_PAGE_TYPE_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "$OZON_CART_PAGE_TYPE_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "$OZON_CART_RECOMMENDATION_MARKER"
+                                    invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
+                                    move-result v1
+                                    if-nez v1, :ozon_tile_grid2_hide
+                                    const-string v1, "$OZON_BASKET_RECOMMENDATION_MARKER"
                                     invoke-virtual {v0, v1}, Ljava/lang/String;->contains(Ljava/lang/CharSequence;)Z
                                     move-result v1
                                     if-nez v1, :ozon_tile_grid2_hide
