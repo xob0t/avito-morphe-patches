@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/xob0t/morphe-patches/compare/v1.3.0...v1.3.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **privacy:** remove root status spoof patch ([d6990d1](https://github.com/xob0t/morphe-patches/commit/d6990d1047eca12f66fd26de3968f1543a2fd351))
+
 # [1.3.0](https://github.com/xob0t/morphe-patches/compare/v1.2.0...v1.3.0) (2026-05-14)
 
 

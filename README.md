@@ -17,7 +17,7 @@ https://github.com/xob0t/morphe-patches
 ## Patches
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.3.0](https://github.com/xob0t/morphe-patches/releases/tag/v1.3.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;22 patches total
+> **[v1.3.1](https://github.com/xob0t/morphe-patches/releases/tag/v1.3.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;21 patches total
 <details open>
 <summary>📦 Avito&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
 <br>
@@ -83,7 +83,7 @@ https://github.com/xob0t/morphe-patches
 </details>
 
 <details open>
-<summary>🌐 Universal&nbsp;&nbsp;•&nbsp;&nbsp;14 patches</summary>
+<summary>🌐 Universal&nbsp;&nbsp;•&nbsp;&nbsp;13 patches</summary>
 <br>
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
@@ -101,7 +101,6 @@ https://github.com/xob0t/morphe-patches
 | [Spoof VPN status](#spoof-vpn-status) | Spoofs VPN state through common Android network APIs. |  |
 | [Spoof emulator status](#spoof-emulator-status) | Spoofs emulator state through common Build, QEMU file, command, and system property checks. |  |
 | [Spoof install source](#spoof-install-source) | Spoofs package installer checks to report Google Play as the install source. |  |
-| [Spoof root status](#spoof-root-status) | Spoofs root state through common file, package, command, and build property checks. |  |
 
 </details>
 
