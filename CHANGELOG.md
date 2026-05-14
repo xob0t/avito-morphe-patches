@@ -1,3 +1,10 @@
+# [1.3.0-dev.2](https://github.com/xob0t/morphe-patches/compare/v1.3.0-dev.1...v1.3.0-dev.2) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ozon:** hide remaining carousels and cart recommendations ([2a66d4a](https://github.com/xob0t/morphe-patches/commit/2a66d4aadd7b1295037da063a95f5b3a4d7d218a))
+
 # [1.3.0-dev.1](https://github.com/xob0t/morphe-patches/compare/v1.2.0...v1.3.0-dev.1) (2026-05-12)
 
 

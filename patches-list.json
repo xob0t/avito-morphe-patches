@@ -1,5 +1,5 @@
 {
-  "version": "1.3.0-dev.1",
+  "version": "1.3.0-dev.2",
   "patches": [
     {
       "name": "Avito privacy",
@@ -185,7 +185,9 @@
       "name": "Remove Ozon ads",
       "description": "Removes Ozon ad widgets, banner carousels, video ads, and PDP promo blocks.",
       "default": true,
-      "dependencies": [],
+      "dependencies": [
+        "ResourcePatch"
+      ],
       "compatiblePackages": [
         {
           "packageName": "ru.ozon.app.android",
@@ -220,7 +222,7 @@
         {
           "key": "hideRecommendationGrids",
           "title": "Hide recommendation grids",
-          "description": "Removes recommendation grids from product, profile, and favorites screens.",
+          "description": "Removes recommendation grids from product, cart, profile, and favorites screens.",
           "required": false,
           "type": "kotlin.Boolean",
           "default": true,
